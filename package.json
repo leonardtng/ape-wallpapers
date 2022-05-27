@@ -53,6 +53,7 @@
   },
   "devDependencies": {
     "@types/lodash.camelcase": "^4.3.7",
-    "@types/lodash.snakecase": "^4.1.7"
+    "@types/lodash.snakecase": "^4.1.7",
+    "@types/merge-images": "^1.2.1"
   }
 }

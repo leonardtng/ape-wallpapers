@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
 import { Box, Card, Grid, useTheme } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import {
-  fetchBaycMetadata,
-  selectBaycMetadata,
-} from "../features/baycMetadataSlice";
+import { useAppDispatch } from "../app/hooks";
+import { fetchBaycMetadata } from "../features/baycMetadataSlice";
 import NavBar from "../components/NavBar";
 import TabSelect from "../components/TabSelect";
 import GeneratedImage from "../components/GeneratedImage";
@@ -12,7 +9,6 @@ import GeneratedImage from "../components/GeneratedImage";
 const Main: React.FC = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
-  const baycMetadata = useAppSelector(selectBaycMetadata);
 
   useEffect(() => {
     dispatch(fetchBaycMetadata());
@@ -26,7 +22,7 @@ const Main: React.FC = () => {
       }}
     >
       <NavBar />
-      <Grid container spacing={0} sx={{ height: "100%", marginTop: "64px" }}>
+      <Grid container spacing={0} sx={{ height: "100%", mt: "64px" }}>
         <Grid item xs={1} lg={3} xl={4}></Grid>
         <Grid
           item
@@ -42,7 +38,7 @@ const Main: React.FC = () => {
           <Card
             sx={{
               width: "45%",
-              height: "40%",
+              height: 300,
               borderRadius: 3,
               border: `2px solid ${theme.palette.primary.main}`,
               boxShadow: `0 0 10px ${theme.palette.primary.main}`,

@@ -16,7 +16,7 @@ const NavBar: React.FC = () => {
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <img src={Ape} alt="Ape" height="32" />
-          <Typography variant="h5" sx={{ marginLeft: 2 }}>
+          <Typography variant="h5" sx={{ ml: 2 }}>
             Ape Lockscreens
           </Typography>
         </Box>

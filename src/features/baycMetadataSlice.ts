@@ -1,28 +1,14 @@
-import {
-  createAsyncThunk,
-  createSlice,
-  PayloadAction,
-  Slice,
-  SliceCaseReducers,
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, Slice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "../app/store";
 import { ipfs as API } from "../common/endpoints";
 import { API_CONFIG as config } from "../common/constants";
-import { BaycMetadata, BaycMetadataState } from "../models";
+import { Bayc, BaycMetadata, BaycMetadataState } from "../models";
 import { cacheWithExpiry, retrieveCache, toCamelCase } from "../common/helpers";
-
-interface Reducers extends SliceCaseReducers<BaycMetadataState> {
-  setSelectedBaycId: (
-    state: BaycMetadataState,
-    action: PayloadAction<number>
-  ) => void;
-}
 
 const initialState: BaycMetadataState = {
   value: null,
   status: "IDLE",
-  selectedBaycId: 8469,
 };
 
 export const fetchBaycMetadata = createAsyncThunk("baycMetadata", async () => {
@@ -39,7 +25,16 @@ export const fetchBaycMetadata = createAsyncThunk("baycMetadata", async () => {
       cancelToken: canceler.token,
     });
 
-    const normalizedResponse = toCamelCase(response.data);
+    const normalizedResponse = toCamelCase(response.data) as BaycMetadata;
+
+    normalizedResponse.collection.forEach((bayc: Bayc) => {
+      if (bayc.tokenId <= 8852) {
+        bayc.tokenId = bayc.tokenId + 1147;
+      } else {
+        bayc.tokenId = bayc.tokenId - 8853;
+      }
+    });
+
     cacheWithExpiry("baycMetadata", normalizedResponse, 10e11); // Cache Period: 10 minutes
 
     return normalizedResponse as BaycMetadata;
@@ -50,18 +45,11 @@ export const selectBaycMetadata: (state: RootState) => BaycMetadataState = (
   state: RootState
 ) => state.baycMetadata;
 
-const baycMetadataSlice: Slice<BaycMetadataState, Reducers, "baycMetadata"> =
+const baycMetadataSlice: Slice<BaycMetadataState, {}, "baycMetadata"> =
   createSlice({
     name: "baycMetadata",
     initialState,
-    reducers: {
-      setSelectedBaycId: (
-        state: BaycMetadataState,
-        action: PayloadAction<number>
-      ) => {
-        state.selectedBaycId = action.payload;
-      },
-    },
+    reducers: {},
     extraReducers: (builder) => {
       builder
         .addCase(fetchBaycMetadata.pending, (state) => {
@@ -77,7 +65,5 @@ const baycMetadataSlice: Slice<BaycMetadataState, Reducers, "baycMetadata"> =
         });
     },
   });
-
-export const { setSelectedBaycId } = baycMetadataSlice.actions;
 
 export default baycMetadataSlice.reducer;

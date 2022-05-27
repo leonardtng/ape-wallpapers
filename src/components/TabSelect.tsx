@@ -3,7 +3,7 @@ import { Box, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import InputSection from "./InputSection";
 
-const TabSelect = () => {
+const TabSelect: React.FC = () => {
   const [value, setValue] = useState("bayc");
 
   const handleChange = (_: React.SyntheticEvent, newValue: string) => {

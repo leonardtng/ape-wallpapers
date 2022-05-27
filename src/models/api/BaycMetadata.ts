@@ -1,12 +1,12 @@
 import { GenericState } from "..";
 
 export interface BaycTraits {
-  Background: string;
-  Hat: string;
-  Eyes: string;
-  Clothes: string;
-  Mouth: string;
-  Fur: string;
+  background: string;
+  hat: string;
+  eyes: string;
+  clothes: string;
+  mouth: string;
+  fur: string;
 }
 
 export interface Bayc {
@@ -21,6 +21,4 @@ export interface BaycMetadata {
   collection: Bayc[];
 }
 
-export interface BaycMetadataState extends GenericState<BaycMetadata | null> {
-  selectedBaycId: number;
-}
+export interface BaycMetadataState extends GenericState<BaycMetadata | null> {}
