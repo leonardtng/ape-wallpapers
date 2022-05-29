@@ -70,6 +70,7 @@ const InputSection = () => {
       <FormControlLabel
         control={
           <Checkbox
+            defaultChecked
             value={showLockscreenOverlay}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               dispatch(setShowLockscreenOverlay(event.target.checked));

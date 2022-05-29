@@ -25,7 +25,7 @@ interface Reducers extends SliceCaseReducers<UserInputState> {
 const initialState: UserInputState = {
   isGeneratingImage: false,
   selectedBaycId: 8469,
-  showLockscreenOverlay: false,
+  showLockscreenOverlay: true,
 };
 
 export const selectUserInput: (state: RootState) => UserInputState = (

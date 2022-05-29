@@ -11,8 +11,9 @@ import {
 import { selectBaycMetadata } from "../features/baycMetadataSlice";
 import { getBackground } from "../common/helpers";
 import { Bayc } from "../models";
-import BaycLockscreenOverlay from "../assets/bayc-lockscreen-overlay.png";
 import BaycLockscreenPlaceholder from "../assets/bayc-lockscreen-placeholder.png";
+import Mockup from "../assets/mockup.png";
+import Overlay from "../assets/overlay.png";
 
 const GeneratedImage: React.FC = () => {
   const theme = useTheme();
@@ -22,8 +23,15 @@ const GeneratedImage: React.FC = () => {
   const { isGeneratingImage, selectedBaycId, showLockscreenOverlay } =
     useAppSelector(selectUserInput);
 
-  const [mergedImage, setMergedImage] = useState(BaycLockscreenPlaceholder);
-  const [withLockscreenOverlay, setWithLockscreenOverlay] = useState("");
+  const [generatedBackground, setGeneratedBackground] = useState(
+    BaycLockscreenPlaceholder
+  );
+  const [withLockscreenOverlay, setWithLockscreenOverlay] = useState(
+    BaycLockscreenPlaceholder
+  );
+  const [withoutLockscreenOverlay, setWithoutLockscreenOverlay] = useState(
+    BaycLockscreenPlaceholder
+  );
 
   useEffect(() => {
     dispatch(setIsGeneratingImage(true));
@@ -31,17 +39,16 @@ const GeneratedImage: React.FC = () => {
     const baycBackground = baycMetadata.value?.collection.find(
       (bayc: Bayc) => bayc.tokenId === selectedBaycId
     )?.traits.background;
-    console.log(
-      baycMetadata.value?.collection.find(
-        (bayc: Bayc) => bayc.tokenId === selectedBaycId
-      )
-    );
+
     if (!baycBackground) {
       dispatch(setIsGeneratingImage(false));
       return;
     }
 
-    function toDataURL(url: string, callback: any) {
+    function toDataURL(
+      url: string,
+      callback: (result: string | ArrayBuffer | null) => void
+    ) {
       var xhr = new XMLHttpRequest();
       xhr.onload = function () {
         var reader = new FileReader();
@@ -57,7 +64,7 @@ const GeneratedImage: React.FC = () => {
 
     toDataURL(
       `${config("ipfs").baseURL}${ipfs.baycImage(selectedBaycId)}`,
-      function (dataUrl: any) {
+      function (dataUrl: string | ArrayBuffer | null) {
         mergeImages(
           [
             {
@@ -66,58 +73,82 @@ const GeneratedImage: React.FC = () => {
               y: 0,
             },
             {
-              src: dataUrl,
+              src: dataUrl as string,
               x: -56,
               y: 1157,
             },
           ],
           { width: 1150, height: 2418.5 }
         ).then((b64) => {
-          setMergedImage(b64);
-          dispatch(setIsGeneratingImage(false));
-
-          mergeImages(
-            [
+          setGeneratedBackground(b64);
+          mergeImages([
+            {
+              src: b64,
+              x: 155,
+              y: 166,
+            },
+            {
+              src: Mockup,
+              x: 0,
+              y: 0,
+            },
+          ]).then((b64) => {
+            setWithoutLockscreenOverlay(b64);
+            mergeImages([
               {
                 src: b64,
                 x: 0,
                 y: 0,
               },
               {
-                src: BaycLockscreenOverlay,
+                src: Overlay,
                 x: 0,
                 y: 0,
               },
-            ],
-            { width: 1150, height: 2418.5 }
-          ).then((b64) => {
-            setWithLockscreenOverlay(b64);
+            ]).then((b64) => {
+              setWithLockscreenOverlay(b64);
+              dispatch(setIsGeneratingImage(false));
+            });
           });
         });
       }
     );
-  }, [dispatch, mergedImage, selectedBaycId, baycMetadata.value?.collection]);
+  }, [
+    dispatch,
+    generatedBackground,
+    selectedBaycId,
+    baycMetadata.value?.collection,
+  ]);
 
   return (
-    <Box height={663.5} width={315.5}>
-      {(isGeneratingImage || mergedImage.length === 0) && (
+    <Box height={641.9} width={340.9} position="relative">
+      {(isGeneratingImage || generatedBackground.length === 0) && (
         <Box
-          height={663.5}
-          width={315.5}
+          height={562}
+          width={259}
           display="flex"
           justifyContent="center"
           alignItems="center"
           position="absolute"
-          sx={{ backgroundColor: `${theme.palette.background.paper}BB` }}
+          sx={{
+            backgroundColor: `${theme.palette.background.paper}BB`,
+            top: "39px",
+            left: "41px",
+            borderRadius: "26px",
+          }}
         >
           <CircularProgress />
         </Box>
       )}
       <img
-        src={showLockscreenOverlay ? withLockscreenOverlay : mergedImage}
+        src={
+          showLockscreenOverlay
+            ? withLockscreenOverlay
+            : withoutLockscreenOverlay
+        }
         alt={`bayc${selectedBaycId}`}
-        height={663.5}
-        width={315.5}
+        height={641.9}
+        width={340.9}
       />
     </Box>
   );
