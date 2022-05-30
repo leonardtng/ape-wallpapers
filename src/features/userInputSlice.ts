@@ -6,26 +6,42 @@ import {
 } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 import { UserInputState } from "../models";
+import BaycLockscreenPlaceholder from "../assets/bayc-generated-default.png";
 
 interface Reducers extends SliceCaseReducers<UserInputState> {
-  setIsGeneratingImage: (
+  setNftMode: (
     state: UserInputState,
-    action: PayloadAction<boolean>
+    action: PayloadAction<UserInputState["nftMode"]>
   ) => void;
-  setSelectedBaycId: (
+  setImageDisplayMode: (
     state: UserInputState,
-    action: PayloadAction<number>
+    action: PayloadAction<UserInputState["imageDisplayMode"]>
   ) => void;
   setShowLockscreenOverlay: (
     state: UserInputState,
-    action: PayloadAction<boolean>
+    action: PayloadAction<UserInputState["showLockscreenOverlay"]>
+  ) => void;
+  setIsGeneratingImage: (
+    state: UserInputState,
+    action: PayloadAction<UserInputState["isGeneratingImage"]>
+  ) => void;
+  setSelectedBaycId: (
+    state: UserInputState,
+    action: PayloadAction<UserInputState["selectedBaycId"]>
+  ) => void;
+  setGeneratedBaycBackground: (
+    state: UserInputState,
+    action: PayloadAction<UserInputState["generatedBaycBackground"]>
   ) => void;
 }
 
 const initialState: UserInputState = {
+  nftMode: "bayc",
+  imageDisplayMode: "preview",
+  showLockscreenOverlay: true,
   isGeneratingImage: false,
   selectedBaycId: 8469,
-  showLockscreenOverlay: true,
+  generatedBaycBackground: BaycLockscreenPlaceholder,
 };
 
 export const selectUserInput: (state: RootState) => UserInputState = (
@@ -37,31 +53,53 @@ const userInputSlice: Slice<UserInputState, Reducers, "userInput"> =
     name: "userInput",
     initialState,
     reducers: {
+      setNftMode: (
+        state: UserInputState,
+        action: PayloadAction<UserInputState["nftMode"]>
+      ) => {
+        state.nftMode = action.payload;
+      },
+      setImageDisplayMode: (
+        state: UserInputState,
+        action: PayloadAction<UserInputState["imageDisplayMode"]>
+      ) => {
+        state.imageDisplayMode = action.payload;
+      },
+      setShowLockscreenOverlay: (
+        state: UserInputState,
+        action: PayloadAction<UserInputState["showLockscreenOverlay"]>
+      ) => {
+        state.showLockscreenOverlay = action.payload;
+      },
       setIsGeneratingImage: (
         state: UserInputState,
-        action: PayloadAction<boolean>
+        action: PayloadAction<UserInputState["isGeneratingImage"]>
       ) => {
         state.isGeneratingImage = action.payload;
       },
       setSelectedBaycId: (
         state: UserInputState,
-        action: PayloadAction<number>
+        action: PayloadAction<UserInputState["selectedBaycId"]>
       ) => {
         state.selectedBaycId = action.payload;
       },
-      setShowLockscreenOverlay: (
+
+      setGeneratedBaycBackground: (
         state: UserInputState,
-        action: PayloadAction<boolean>
+        action: PayloadAction<UserInputState["generatedBaycBackground"]>
       ) => {
-        state.showLockscreenOverlay = action.payload;
+        state.generatedBaycBackground = action.payload;
       },
     },
   });
 
 export const {
+  setNftMode,
+  setImageDisplayMode,
+  setShowLockscreenOverlay,
   setIsGeneratingImage,
   setSelectedBaycId,
-  setShowLockscreenOverlay,
+  setGeneratedBaycBackground,
 } = userInputSlice.actions;
 
 export default userInputSlice.reducer;

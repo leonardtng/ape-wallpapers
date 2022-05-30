@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import InputSection from "./InputSection";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { selectUserInput, setNftMode } from "../features/userInputSlice";
 
 const TabSelect: React.FC = () => {
-  const [value, setValue] = useState("bayc");
+  const dispatch = useAppDispatch();
+  const { nftMode } = useAppSelector(selectUserInput);
 
-  const handleChange = (_: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
+  const handleChange = (_: React.SyntheticEvent, newValue: "bayc" | "mayc") => {
+    dispatch(setNftMode(newValue));
   };
 
   return (
-    <TabContext value={value}>
+    <TabContext value={nftMode}>
       <Box sx={{ borderBottom: 1, borderColor: "#1F2747" }}>
         <TabList onChange={handleChange} aria-label="lab API tabs example">
           <Tab label="BAYC" value="bayc" />
@@ -21,7 +24,9 @@ const TabSelect: React.FC = () => {
       <TabPanel value="bayc">
         <InputSection />
       </TabPanel>
-      <TabPanel value="mayc">Item Two</TabPanel>
+      <TabPanel value="mayc">
+        <InputSection />
+      </TabPanel>
     </TabContext>
   );
 };

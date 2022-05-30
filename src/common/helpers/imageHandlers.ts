@@ -29,3 +29,20 @@ export const getBackground = (type: "bayc" | "mayc", background: string) => {
       return BaycPurple;
   }
 };
+
+export const toDataURL = (
+  url: string,
+  callback: (result: string | ArrayBuffer | null) => void
+) => {
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function () {
+    var reader = new FileReader();
+    reader.onloadend = function () {
+      callback(reader.result);
+    };
+    reader.readAsDataURL(xhr.response);
+  };
+  xhr.open("GET", url);
+  xhr.responseType = "blob";
+  xhr.send();
+};

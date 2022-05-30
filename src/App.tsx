@@ -19,6 +19,7 @@ const App: React.FC = () => {
       text: {
         primary: "#E4E8F7",
         secondary: "#D8DDF0",
+        disabled: "#D8DDF060",
       },
     },
     breakpoints: {

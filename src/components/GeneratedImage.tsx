@@ -6,30 +6,34 @@ import { ipfs } from "../common/endpoints";
 import mergeImages from "merge-images";
 import {
   selectUserInput,
+  setGeneratedBaycBackground,
   setIsGeneratingImage,
 } from "../features/userInputSlice";
 import { selectBaycMetadata } from "../features/baycMetadataSlice";
-import { getBackground } from "../common/helpers";
+import { getBackground, toDataURL } from "../common/helpers";
 import { Bayc } from "../models";
 import BaycLockscreenPlaceholder from "../assets/bayc-lockscreen-placeholder.png";
 import Mockup from "../assets/mockup.png";
 import Overlay from "../assets/overlay.png";
+import ImageDisplayModeToggle from "./ImageDisplayModeToggle";
 
 const GeneratedImage: React.FC = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
 
   const baycMetadata = useAppSelector(selectBaycMetadata);
-  const { isGeneratingImage, selectedBaycId, showLockscreenOverlay } =
-    useAppSelector(selectUserInput);
+  const {
+    imageDisplayMode,
+    showLockscreenOverlay,
+    isGeneratingImage,
+    selectedBaycId,
+    generatedBaycBackground,
+  } = useAppSelector(selectUserInput);
 
-  const [generatedBackground, setGeneratedBackground] = useState(
+  const [withOverlay, setWithOverlay] = useState<string>(
     BaycLockscreenPlaceholder
   );
-  const [withLockscreenOverlay, setWithLockscreenOverlay] = useState(
-    BaycLockscreenPlaceholder
-  );
-  const [withoutLockscreenOverlay, setWithoutLockscreenOverlay] = useState(
+  const [withoutOverlay, setWithoutOverlay] = useState<string>(
     BaycLockscreenPlaceholder
   );
 
@@ -43,23 +47,6 @@ const GeneratedImage: React.FC = () => {
     if (!baycBackground) {
       dispatch(setIsGeneratingImage(false));
       return;
-    }
-
-    function toDataURL(
-      url: string,
-      callback: (result: string | ArrayBuffer | null) => void
-    ) {
-      var xhr = new XMLHttpRequest();
-      xhr.onload = function () {
-        var reader = new FileReader();
-        reader.onloadend = function () {
-          callback(reader.result);
-        };
-        reader.readAsDataURL(xhr.response);
-      };
-      xhr.open("GET", url);
-      xhr.responseType = "blob";
-      xhr.send();
     }
 
     toDataURL(
@@ -78,9 +65,9 @@ const GeneratedImage: React.FC = () => {
               y: 1157,
             },
           ],
-          { width: 1150, height: 2418.5 }
+          { width: 1151, height: 2419 }
         ).then((b64) => {
-          setGeneratedBackground(b64);
+          dispatch(setGeneratedBaycBackground(b64));
           mergeImages([
             {
               src: b64,
@@ -93,7 +80,7 @@ const GeneratedImage: React.FC = () => {
               y: 0,
             },
           ]).then((b64) => {
-            setWithoutLockscreenOverlay(b64);
+            setWithoutOverlay(b64);
             mergeImages([
               {
                 src: b64,
@@ -106,50 +93,75 @@ const GeneratedImage: React.FC = () => {
                 y: 0,
               },
             ]).then((b64) => {
-              setWithLockscreenOverlay(b64);
+              setWithOverlay(b64);
               dispatch(setIsGeneratingImage(false));
             });
           });
         });
       }
     );
-  }, [
-    dispatch,
-    generatedBackground,
-    selectedBaycId,
-    baycMetadata.value?.collection,
-  ]);
+  }, [dispatch, selectedBaycId, baycMetadata.value?.collection]);
 
   return (
-    <Box height={641.9} width={340.9} position="relative">
-      {(isGeneratingImage || generatedBackground.length === 0) && (
-        <Box
-          height={562}
-          width={259}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          position="absolute"
-          sx={{
-            backgroundColor: `${theme.palette.background.paper}BB`,
-            top: "39px",
-            left: "41px",
-            borderRadius: "26px",
-          }}
-        >
-          <CircularProgress />
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="space-between"
+      width="420px"
+    >
+      {imageDisplayMode === "preview" ? (
+        <Box position="relative">
+          {isGeneratingImage && (
+            <Box
+              height={562}
+              width={259}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              position="absolute"
+              sx={{
+                backgroundColor: `${theme.palette.background.paper}BB`,
+                top: "39px",
+                left: "41px",
+                borderRadius: "26px",
+              }}
+            >
+              <CircularProgress />
+            </Box>
+          )}
+          <img
+            src={showLockscreenOverlay ? withOverlay : withoutOverlay}
+            alt={`bayc${selectedBaycId}`}
+            height={641.9}
+            width={340.9}
+          />
+        </Box>
+      ) : (
+        <Box position="relative" mb={2} padding={3}>
+          {isGeneratingImage && (
+            <Box
+              height={604.75}
+              width={287.75}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              position="absolute"
+              sx={{
+                backgroundColor: `${theme.palette.background.paper}BB`,
+              }}
+            >
+              <CircularProgress />
+            </Box>
+          )}
+          <img
+            src={generatedBaycBackground}
+            alt={`bayc${selectedBaycId}`}
+            height={604.75}
+            width={287.75}
+          />
         </Box>
       )}
-      <img
-        src={
-          showLockscreenOverlay
-            ? withLockscreenOverlay
-            : withoutLockscreenOverlay
-        }
-        alt={`bayc${selectedBaycId}`}
-        height={641.9}
-        width={340.9}
-      />
+      <ImageDisplayModeToggle />
     </Box>
   );
 };

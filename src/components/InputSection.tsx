@@ -14,17 +14,31 @@ import {
   setShowLockscreenOverlay,
 } from "../features/userInputSlice";
 import { LoadingButton } from "@mui/lab";
+import { DownloadRounded } from "@mui/icons-material";
 
 const InputSection = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
-  const { isGeneratingImage, selectedBaycId, showLockscreenOverlay } =
-    useAppSelector(selectUserInput);
+  const {
+    imageDisplayMode,
+    showLockscreenOverlay,
+    isGeneratingImage,
+    selectedBaycId,
+    generatedBaycBackground,
+  } = useAppSelector(selectUserInput);
 
   const [inputBaycId, setInputBaycId] = useState<number>(selectedBaycId);
 
   const handleSubmit = () => {
-    dispatch(setSelectedBaycId(Number(inputBaycId)));
+    dispatch(setSelectedBaycId(inputBaycId));
+  };
+
+  const handleDownload = () => {
+    var a = document.createElement("a");
+    a.href = generatedBaycBackground;
+    a.download = `${selectedBaycId}.jpg`;
+    a.click();
+    a.remove();
   };
 
   return (
@@ -60,20 +74,45 @@ const InputSection = () => {
             backgroundColor: theme.palette.primary.main,
             boxShadow: `0 0 20px ${theme.palette.primary.main} !important`,
           },
-          mb: 2,
+          mb: 3,
         }}
         onClick={handleSubmit}
       >
         Generate
       </LoadingButton>
 
+      <LoadingButton
+        loading={isGeneratingImage}
+        variant="contained"
+        sx={{
+          width: "100%",
+          backgroundColor: `${theme.palette.secondary.main} !important`,
+          boxShadow: `0 0 10px ${theme.palette.secondary.main} !important`,
+          ":hover": {
+            backgroundColor: theme.palette.secondary.main,
+            boxShadow: `0 0 20px ${theme.palette.secondary.main} !important`,
+          },
+          mb: 2,
+        }}
+        onClick={handleDownload}
+      >
+        <DownloadRounded sx={{ mr: 1 }} />
+        Save Wallpaper
+      </LoadingButton>
+
       <FormControlLabel
+        disabled={imageDisplayMode !== "preview"}
         control={
           <Checkbox
             defaultChecked
             value={showLockscreenOverlay}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               dispatch(setShowLockscreenOverlay(event.target.checked));
+            }}
+            sx={{
+              "&.Mui-disabled": {
+                color: theme.palette.text.disabled,
+              },
             }}
           />
         }

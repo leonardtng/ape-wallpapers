@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Box, Card, Grid, useTheme } from "@mui/material";
+import { Box, Card, useTheme } from "@mui/material";
 import { useAppDispatch } from "../app/hooks";
 import { fetchBaycMetadata } from "../features/baycMetadataSlice";
 import NavBar from "../components/NavBar";
@@ -16,19 +16,14 @@ const Main: React.FC = () => {
 
   return (
     <Box
+      height="calc(100vh - 64px)"
       sx={{
-        height: "calc(100vh - 64px)",
         backgroundColor: theme.palette.background.default,
       }}
     >
       <NavBar />
-      <Grid container spacing={0} sx={{ height: "100%", mt: "64px" }}>
-        <Grid item xs={1} lg={3} xl={4}></Grid>
-        <Grid
-          item
-          xs={10}
-          lg={6}
-          xl={4}
+      <Box display="flex" justifyContent="center" height="100%" mt="64px">
+        <Box
           sx={{
             display: "flex",
             justifyContent: "space-between",
@@ -37,21 +32,20 @@ const Main: React.FC = () => {
         >
           <Card
             sx={{
-              width: "45%",
-              height: 300,
+              width: "390px",
               borderRadius: 3,
               border: `2px solid ${theme.palette.primary.main}`,
               boxShadow: `0 0 10px ${theme.palette.primary.main}`,
+              mr: 5,
             }}
           >
             <TabSelect />
           </Card>
-          <Box sx={{ width: "45%" }}>
+          <Box>
             <GeneratedImage />
           </Box>
-        </Grid>
-        <Grid item xs={1} lg={3} xl={4}></Grid>
-      </Grid>
+        </Box>
+      </Box>
     </Box>
   );
 };

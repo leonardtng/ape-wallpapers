@@ -31,6 +31,7 @@ const NavBar: React.FC = () => {
           <Typography variant="body1">
             Created by{" "}
             <Link
+              color="secondary"
               href="https://twitter.com/Brainy8469"
               target="_blank"
               rel="noopener noreferrer"
