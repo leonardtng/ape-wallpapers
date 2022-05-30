@@ -10,9 +10,9 @@ import {
   setIsGeneratingImage,
 } from "../features/userInputSlice";
 import { selectBaycMetadata } from "../features/baycMetadataSlice";
-import { getBackground, toDataURL } from "../common/helpers";
+import { getBackground, getLogoOverlay, toDataURL } from "../common/helpers";
 import { Bayc } from "../models";
-import BaycLockscreenPlaceholder from "../assets/bayc-lockscreen-placeholder.png";
+import BaycLockscreenPlaceholder from "../assets/bayc/bayc-lockscreen-placeholder.png";
 import Mockup from "../assets/mockup.png";
 import Overlay from "../assets/overlay.png";
 import ImageDisplayModeToggle from "./ImageDisplayModeToggle";
@@ -28,6 +28,7 @@ const GeneratedImage: React.FC = () => {
     isGeneratingImage,
     selectedBaycId,
     generatedBaycBackground,
+    selectedBaycLogoOverlay,
   } = useAppSelector(selectUserInput);
 
   const [withOverlay, setWithOverlay] = useState<string>(
@@ -64,6 +65,15 @@ const GeneratedImage: React.FC = () => {
               x: -56,
               y: 1157,
             },
+            ...(selectedBaycLogoOverlay !== "none"
+              ? [
+                  {
+                    src: getLogoOverlay("bayc", selectedBaycLogoOverlay),
+                    x: 0,
+                    y: 0,
+                  },
+                ]
+              : []),
           ],
           { width: 1151, height: 2419 }
         ).then((b64) => {
@@ -100,14 +110,19 @@ const GeneratedImage: React.FC = () => {
         });
       }
     );
-  }, [dispatch, selectedBaycId, baycMetadata.value?.collection]);
+  }, [
+    dispatch,
+    selectedBaycId,
+    baycMetadata.value?.collection,
+    selectedBaycLogoOverlay,
+  ]);
 
   return (
     <Box
       display="flex"
       alignItems="center"
       justifyContent="space-between"
-      width="420px"
+      width="430px"
     >
       {imageDisplayMode === "preview" ? (
         <Box position="relative">

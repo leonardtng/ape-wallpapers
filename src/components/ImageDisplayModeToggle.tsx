@@ -39,7 +39,10 @@ const ImageDisplayModeToggle: React.FC = () => {
       elevation={0}
       sx={{
         display: "flex",
-        border: `1px solid ${theme.palette.divider}`,
+        border: `2px solid ${theme.palette.secondary.main}`,
+        boxShadow: `0 0 5px ${theme.palette.secondary.main}`,
+        borderRadius: 2,
+        padding: "3px",
         flexWrap: "wrap",
       }}
     >

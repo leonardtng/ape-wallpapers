@@ -1,11 +1,12 @@
 import React from "react";
-import { responsiveFontSizes } from "@mui/material";
+import { CssBaseline, responsiveFontSizes } from "@mui/material";
 import { createTheme, Theme, ThemeProvider } from "@mui/material/styles";
 import Main from "./pages/Main";
 
 const App: React.FC = () => {
   const theme: Theme = createTheme({
     palette: {
+      mode: "dark",
       primary: {
         main: "#7c4dff",
       },
@@ -34,10 +35,20 @@ const App: React.FC = () => {
     typography: {
       fontFamily: "'Kanit', sans-serif;",
     },
+    components: {
+      MuiPaper: {
+        styleOverrides: {
+          root: {
+            backgroundImage: "none",
+          },
+        },
+      },
+    },
   });
 
   return (
     <ThemeProvider theme={responsiveFontSizes(theme)}>
+      <CssBaseline />
       <Main />
     </ThemeProvider>
   );

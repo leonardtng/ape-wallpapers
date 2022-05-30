@@ -3,7 +3,14 @@ import {
   Box,
   Checkbox,
   FormControlLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  styled,
   TextField,
+  Tooltip,
+  tooltipClasses,
+  TooltipProps,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -11,26 +18,43 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
   selectUserInput,
   setSelectedBaycId,
+  setSelectedBaycLogoOverlay,
   setShowLockscreenOverlay,
 } from "../features/userInputSlice";
 import { LoadingButton } from "@mui/lab";
-import { DownloadRounded } from "@mui/icons-material";
+import { DownloadRounded, HelpOutlineRounded } from "@mui/icons-material";
+import { UserInputState } from "../models";
+
+const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))({
+  [`& .${tooltipClasses.tooltip}`]: {
+    maxWidth: 160,
+    marginBottom: "6px !important",
+  },
+});
 
 const InputSection = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const {
+    // nftMode,
     imageDisplayMode,
     showLockscreenOverlay,
     isGeneratingImage,
     selectedBaycId,
     generatedBaycBackground,
+    selectedBaycLogoOverlay,
   } = useAppSelector(selectUserInput);
 
   const [inputBaycId, setInputBaycId] = useState<number>(selectedBaycId);
+  const [inputBaycLogoOverlay, setBaycLogoOverlay] = useState<
+    UserInputState["selectedBaycLogoOverlay"]
+  >(selectedBaycLogoOverlay);
 
   const handleSubmit = () => {
     dispatch(setSelectedBaycId(inputBaycId));
+    dispatch(setSelectedBaycLogoOverlay(inputBaycLogoOverlay));
   };
 
   const handleDownload = () => {
@@ -40,6 +64,21 @@ const InputSection = () => {
     a.click();
     a.remove();
   };
+
+  const baycLogoOverlay = [
+    {
+      value: "none",
+      label: "None",
+    },
+    {
+      value: "baycLogoBlack",
+      label: "BAYC Logo Black",
+    },
+    {
+      value: "baycLogoWhite",
+      label: "BAYC Logo White",
+    },
+  ];
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
@@ -55,12 +94,58 @@ const InputSection = () => {
           type="number"
           sx={{
             boxShadow: `0 0 5px ${theme.palette.primary.main}`,
-            mb: 3,
+            mb: 2,
           }}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setInputBaycId(Number(event.target.value));
           }}
         />
+      </Box>
+
+      <Box width="100%">
+        <Box display="flex" alignItems="flex-end" mb={1}>
+          <Typography variant="body2" sx={{ ml: 1, mr: "4px" }}>
+            Logo Overlay
+          </Typography>
+          <CustomWidthTooltip
+            title="Contact me on Twitter to add your community's logo here!"
+            placement="top"
+          >
+            <HelpOutlineRounded
+              sx={{
+                height: "16px",
+                width: "16px",
+                mb: "1px",
+                cursor: "pointer",
+              }}
+            />
+          </CustomWidthTooltip>
+        </Box>
+
+        <Select
+          fullWidth
+          sx={{
+            mb: 4,
+            border: `2px solid ${theme.palette.primary.main}`,
+            boxShadow: `0 0 5px ${theme.palette.primary.main}`,
+            fieldset: {
+              border: "none",
+            },
+            "&.MuiSvgIcon-root": {
+              color: "#ffffff !important",
+            },
+          }}
+          value={inputBaycLogoOverlay}
+          onChange={(event: SelectChangeEvent) => {
+            setBaycLogoOverlay(
+              event.target.value as UserInputState["selectedBaycLogoOverlay"]
+            );
+          }}
+        >
+          {baycLogoOverlay.map((logoOverlay) => (
+            <MenuItem value={logoOverlay.value}>{logoOverlay.label}</MenuItem>
+          ))}
+        </Select>
       </Box>
 
       <LoadingButton

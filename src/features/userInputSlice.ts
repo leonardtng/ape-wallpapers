@@ -6,7 +6,7 @@ import {
 } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 import { UserInputState } from "../models";
-import BaycLockscreenPlaceholder from "../assets/bayc-generated-default.png";
+import BaycLockscreenPlaceholder from "../assets/bayc/bayc-generated-default.png";
 
 interface Reducers extends SliceCaseReducers<UserInputState> {
   setNftMode: (
@@ -33,6 +33,10 @@ interface Reducers extends SliceCaseReducers<UserInputState> {
     state: UserInputState,
     action: PayloadAction<UserInputState["generatedBaycBackground"]>
   ) => void;
+  setSelectedBaycLogoOverlay: (
+    state: UserInputState,
+    action: PayloadAction<UserInputState["selectedBaycLogoOverlay"]>
+  ) => void;
 }
 
 const initialState: UserInputState = {
@@ -42,6 +46,7 @@ const initialState: UserInputState = {
   isGeneratingImage: false,
   selectedBaycId: 8469,
   generatedBaycBackground: BaycLockscreenPlaceholder,
+  selectedBaycLogoOverlay: "baycLogoWhite",
 };
 
 export const selectUserInput: (state: RootState) => UserInputState = (
@@ -83,12 +88,17 @@ const userInputSlice: Slice<UserInputState, Reducers, "userInput"> =
       ) => {
         state.selectedBaycId = action.payload;
       },
-
       setGeneratedBaycBackground: (
         state: UserInputState,
         action: PayloadAction<UserInputState["generatedBaycBackground"]>
       ) => {
         state.generatedBaycBackground = action.payload;
+      },
+      setSelectedBaycLogoOverlay: (
+        state: UserInputState,
+        action: PayloadAction<UserInputState["selectedBaycLogoOverlay"]>
+      ) => {
+        state.selectedBaycLogoOverlay = action.payload;
       },
     },
   });
@@ -100,6 +110,7 @@ export const {
   setIsGeneratingImage,
   setSelectedBaycId,
   setGeneratedBaycBackground,
+  setSelectedBaycLogoOverlay,
 } = userInputSlice.actions;
 
 export default userInputSlice.reducer;

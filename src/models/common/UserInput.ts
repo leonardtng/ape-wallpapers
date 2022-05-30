@@ -5,4 +5,5 @@ export interface UserInputState {
   isGeneratingImage: boolean;
   selectedBaycId: number;
   generatedBaycBackground: string;
+  selectedBaycLogoOverlay: "none" | "baycLogoBlack" | "baycLogoWhite";
 }

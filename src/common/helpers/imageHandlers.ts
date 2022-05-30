@@ -1,11 +1,15 @@
-import BaycPurple from "../../assets/bayc-backgrounds/bayc-purple.png";
-import BaycYellow from "../../assets/bayc-backgrounds/bayc-yellow.png";
-import BaycAquamarine from "../../assets/bayc-backgrounds/bayc-aquamarine.png";
-import BaycArmyGreen from "../../assets/bayc-backgrounds/bayc-yellow.png";
-import BaycBlue from "../../assets/bayc-backgrounds/bayc-blue.png";
-import BaycGray from "../../assets/bayc-backgrounds/bayc-gray.png";
-import BaycNewPunkBlue from "../../assets/bayc-backgrounds/bayc-new-punk-blue.png";
-import BaycOrange from "../../assets/bayc-backgrounds/bayc-orange.png";
+import BaycPurple from "../../assets/bayc/bayc-backgrounds/bayc-purple.png";
+import BaycYellow from "../../assets/bayc/bayc-backgrounds/bayc-yellow.png";
+import BaycAquamarine from "../../assets/bayc/bayc-backgrounds/bayc-aquamarine.png";
+import BaycArmyGreen from "../../assets/bayc/bayc-backgrounds/bayc-yellow.png";
+import BaycBlue from "../../assets/bayc/bayc-backgrounds/bayc-blue.png";
+import BaycGray from "../../assets/bayc/bayc-backgrounds/bayc-gray.png";
+import BaycNewPunkBlue from "../../assets/bayc/bayc-backgrounds/bayc-new-punk-blue.png";
+import BaycOrange from "../../assets/bayc/bayc-backgrounds/bayc-orange.png";
+
+import BaycLogoBlack from "../../assets/bayc-logo-overlay/bayc-logo-black.png";
+import BaycLogoWhite from "../../assets/bayc-logo-overlay/bayc-logo-white.png";
+import { UserInputState } from "../../models/common/UserInput";
 
 export const getBackground = (type: "bayc" | "mayc", background: string) => {
   switch (background) {
@@ -27,6 +31,20 @@ export const getBackground = (type: "bayc" | "mayc", background: string) => {
       return BaycOrange;
     default:
       return BaycPurple;
+  }
+};
+
+export const getLogoOverlay = (
+  type: "bayc" | "mayc",
+  logoOverlay: UserInputState["selectedBaycLogoOverlay"]
+) => {
+  switch (logoOverlay) {
+    case "baycLogoBlack":
+      return BaycLogoBlack;
+    case "baycLogoWhite":
+      return BaycLogoWhite;
+    default:
+      return BaycLogoBlack;
   }
 };
 
