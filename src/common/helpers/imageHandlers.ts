@@ -7,44 +7,105 @@ import BaycGray from "../../assets/bayc/bayc-backgrounds/bayc-gray.png";
 import BaycNewPunkBlue from "../../assets/bayc/bayc-backgrounds/bayc-new-punk-blue.png";
 import BaycOrange from "../../assets/bayc/bayc-backgrounds/bayc-orange.png";
 
-import BaycLogoBlack from "../../assets/bayc-logo-overlay/bayc-logo-black.png";
-import BaycLogoWhite from "../../assets/bayc-logo-overlay/bayc-logo-white.png";
-import { UserInputState } from "../../models/common/UserInput";
+import MaycPurple from "../../assets/mayc/mayc-backgrounds/mayc-purple.png";
+import MaycYellow from "../../assets/mayc/mayc-backgrounds/mayc-yellow.png";
+import MaycAquamarine from "../../assets/mayc/mayc-backgrounds/mayc-aquamarine.png";
+import MaycArmyGreen from "../../assets/mayc/mayc-backgrounds/mayc-yellow.png";
+import MaycBlue from "../../assets/mayc/mayc-backgrounds/mayc-blue.png";
+import MaycGray from "../../assets/mayc/mayc-backgrounds/mayc-gray.png";
+import MaycNewPunkBlue from "../../assets/mayc/mayc-backgrounds/mayc-new-punk-blue.png";
+import MaycOrange from "../../assets/mayc/mayc-backgrounds/mayc-orange.png";
+import MaycMega from "../../assets/mayc/mayc-backgrounds/mayc-mega.png";
 
-export const getBackground = (type: "bayc" | "mayc", background: string) => {
-  switch (background) {
-    case "Purple":
-      return BaycPurple;
-    case "Yellow":
-      return BaycYellow;
-    case "Aquamarine":
-      return BaycAquamarine;
-    case "Bayc Army Green":
-      return BaycArmyGreen;
-    case "Blue":
-      return BaycBlue;
-    case "Gray":
-      return BaycGray;
-    case "New Punk Blue":
-      return BaycNewPunkBlue;
-    case "Orange":
-      return BaycOrange;
+import BaycLogoBlack from "../../assets/bayc/bayc-logo-overlay/bayc-logo-black.png";
+import BaycLogoWhite from "../../assets/bayc/bayc-logo-overlay/bayc-logo-white.png";
+
+import MaycLogoSlime from "../../assets/mayc/mayc-logo-overlay/mayc-logo-slime.png";
+import MaycLogoBlack from "../../assets/mayc/mayc-logo-overlay/mayc-logo-black.png";
+import MaycLogoWhite from "../../assets/mayc/mayc-logo-overlay/mayc-logo-white.png";
+
+export const getBackground = (
+  type: "bayc" | "mayc",
+  background: string | undefined
+) => {
+  switch (type) {
+    case "bayc":
+      switch (background) {
+        case "Purple":
+          return BaycPurple;
+        case "Yellow":
+          return BaycYellow;
+        case "Aquamarine":
+          return BaycAquamarine;
+        case "Bayc Army Green":
+          return BaycArmyGreen;
+        case "Blue":
+          return BaycBlue;
+        case "Gray":
+          return BaycGray;
+        case "New Punk Blue":
+          return BaycNewPunkBlue;
+        case "Orange":
+          return BaycOrange;
+        default:
+          return BaycPurple;
+      }
+    case "mayc":
+      switch (background) {
+        case "M1 Purple":
+        case "M2 Purple":
+          return MaycPurple;
+        case "M1 Yellow":
+        case "M2 Yellow":
+          return MaycYellow;
+        case "M1 Aquamarine":
+        case "M2 Aquamarine":
+          return MaycAquamarine;
+        case "M1 Army Green":
+        case "M2 Army Green":
+          return MaycArmyGreen;
+        case "M1 Blue":
+        case "M2 Blue":
+          return MaycBlue;
+        case "M1 Gray":
+        case "M2 Gray":
+          return MaycGray;
+        case "M1 Punk Blue":
+        case "M2 Punk Blue":
+          return MaycNewPunkBlue;
+        case "M1 Orange":
+        case "M2 Orange":
+          return MaycOrange;
+        default:
+          return MaycMega;
+      }
     default:
       return BaycPurple;
   }
 };
 
-export const getLogoOverlay = (
-  type: "bayc" | "mayc",
-  logoOverlay: UserInputState["selectedBaycLogoOverlay"]
-) => {
-  switch (logoOverlay) {
-    case "baycLogoBlack":
-      return BaycLogoBlack;
-    case "baycLogoWhite":
-      return BaycLogoWhite;
+export const getLogoOverlay = (type: "bayc" | "mayc", logoOverlay: string) => {
+  switch (type) {
+    case "bayc":
+      switch (logoOverlay) {
+        case "baycLogoBlack":
+          return BaycLogoBlack;
+        case "baycLogoWhite":
+          return BaycLogoWhite;
+        default:
+          return BaycLogoBlack;
+      }
+    case "mayc":
+      switch (logoOverlay) {
+        case "maycLogoSlime":
+          return MaycLogoSlime;
+        case "maycLogoBlack":
+          return MaycLogoBlack;
+        default:
+          return MaycLogoWhite;
+      }
     default:
-      return BaycLogoBlack;
+      return BaycPurple;
   }
 };
 

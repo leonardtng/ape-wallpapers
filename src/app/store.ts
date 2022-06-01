@@ -1,10 +1,12 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import baycMetadataReducer from "../features/baycMetadataSlice";
+import maycDetailsReducer from "../features/maycDetailsSlice";
 import userInputReducer from "../features/userInputSlice";
 
 export const store = configureStore({
   reducer: {
     baycMetadata: baycMetadataReducer,
+    maycDetails: maycDetailsReducer,
     userInput: userInputReducer,
   },
 });

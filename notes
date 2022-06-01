@@ -2,6 +2,6 @@ BAYC metadata: https://ipfs.io/ipfs/Qme57kZ2VuVzcj5sC3tVHFgyyEgBTmAnyTK45YVNxKf6
 
 To get BAYC image, https://ipfs.io/ipfs/QmQ6VgRFiVTdKbiebxGvhW3Wa3Lkhpe6SkWBPjGnPkTttS/[id].png
 
-MAYC metadata: https://boredapeyachtclub.com/api/mutants/[id]
+MAYC metadata: https://cors-anywhere.herokuapp.com/https://boredapeyachtclub.com/api/mutants/[id]
 
 To get MAYC image, get image hash from metadata, then go to https://ipfs.io/ipfs/[image_hash]

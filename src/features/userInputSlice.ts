@@ -7,6 +7,7 @@ import {
 import { RootState } from "../app/store";
 import { UserInputState } from "../models";
 import BaycLockscreenPlaceholder from "../assets/bayc/bayc-generated-default.png";
+import MaycLockscreenPlaceholder from "../assets/mayc/mayc-generated-default.png";
 
 interface Reducers extends SliceCaseReducers<UserInputState> {
   setNftMode: (
@@ -21,9 +22,10 @@ interface Reducers extends SliceCaseReducers<UserInputState> {
     state: UserInputState,
     action: PayloadAction<UserInputState["showLockscreenOverlay"]>
   ) => void;
-  setIsGeneratingImage: (
+
+  setIsGeneratingBaycImage: (
     state: UserInputState,
-    action: PayloadAction<UserInputState["isGeneratingImage"]>
+    action: PayloadAction<UserInputState["isGeneratingBaycImage"]>
   ) => void;
   setSelectedBaycId: (
     state: UserInputState,
@@ -37,16 +39,37 @@ interface Reducers extends SliceCaseReducers<UserInputState> {
     state: UserInputState,
     action: PayloadAction<UserInputState["selectedBaycLogoOverlay"]>
   ) => void;
+
+  setIsGeneratingMaycImage: (
+    state: UserInputState,
+    action: PayloadAction<UserInputState["isGeneratingMaycImage"]>
+  ) => void;
+  setSelectedMaycId: (
+    state: UserInputState,
+    action: PayloadAction<UserInputState["selectedMaycId"]>
+  ) => void;
+  setGeneratedMaycBackground: (
+    state: UserInputState,
+    action: PayloadAction<UserInputState["generatedMaycBackground"]>
+  ) => void;
+  setSelectedMaycLogoOverlay: (
+    state: UserInputState,
+    action: PayloadAction<UserInputState["selectedMaycLogoOverlay"]>
+  ) => void;
 }
 
 const initialState: UserInputState = {
   nftMode: "bayc",
   imageDisplayMode: "preview",
   showLockscreenOverlay: true,
-  isGeneratingImage: false,
+  isGeneratingBaycImage: false,
   selectedBaycId: 8469,
   generatedBaycBackground: BaycLockscreenPlaceholder,
   selectedBaycLogoOverlay: "baycLogoWhite",
+  isGeneratingMaycImage: false,
+  selectedMaycId: 0,
+  generatedMaycBackground: MaycLockscreenPlaceholder,
+  selectedMaycLogoOverlay: "maycLogoSlime",
 };
 
 export const selectUserInput: (state: RootState) => UserInputState = (
@@ -76,11 +99,12 @@ const userInputSlice: Slice<UserInputState, Reducers, "userInput"> =
       ) => {
         state.showLockscreenOverlay = action.payload;
       },
-      setIsGeneratingImage: (
+
+      setIsGeneratingBaycImage: (
         state: UserInputState,
-        action: PayloadAction<UserInputState["isGeneratingImage"]>
+        action: PayloadAction<UserInputState["isGeneratingBaycImage"]>
       ) => {
-        state.isGeneratingImage = action.payload;
+        state.isGeneratingBaycImage = action.payload;
       },
       setSelectedBaycId: (
         state: UserInputState,
@@ -100,6 +124,31 @@ const userInputSlice: Slice<UserInputState, Reducers, "userInput"> =
       ) => {
         state.selectedBaycLogoOverlay = action.payload;
       },
+
+      setIsGeneratingMaycImage: (
+        state: UserInputState,
+        action: PayloadAction<UserInputState["isGeneratingMaycImage"]>
+      ) => {
+        state.isGeneratingMaycImage = action.payload;
+      },
+      setSelectedMaycId: (
+        state: UserInputState,
+        action: PayloadAction<UserInputState["selectedMaycId"]>
+      ) => {
+        state.selectedMaycId = action.payload;
+      },
+      setGeneratedMaycBackground: (
+        state: UserInputState,
+        action: PayloadAction<UserInputState["generatedMaycBackground"]>
+      ) => {
+        state.generatedMaycBackground = action.payload;
+      },
+      setSelectedMaycLogoOverlay: (
+        state: UserInputState,
+        action: PayloadAction<UserInputState["selectedMaycLogoOverlay"]>
+      ) => {
+        state.selectedMaycLogoOverlay = action.payload;
+      },
     },
   });
 
@@ -107,10 +156,16 @@ export const {
   setNftMode,
   setImageDisplayMode,
   setShowLockscreenOverlay,
-  setIsGeneratingImage,
+
+  setIsGeneratingBaycImage,
   setSelectedBaycId,
   setGeneratedBaycBackground,
   setSelectedBaycLogoOverlay,
+
+  setIsGeneratingMaycImage,
+  setSelectedMaycId,
+  setGeneratedMaycBackground,
+  setSelectedMaycLogoOverlay,
 } = userInputSlice.actions;
 
 export default userInputSlice.reducer;

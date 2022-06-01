@@ -6,57 +6,60 @@ import { ipfs } from "../common/endpoints";
 import mergeImages from "merge-images";
 import {
   selectUserInput,
-  setGeneratedBaycBackground,
-  setIsGeneratingImage,
+  setGeneratedMaycBackground,
+  setIsGeneratingMaycImage,
 } from "../features/userInputSlice";
-import { selectBaycMetadata } from "../features/baycMetadataSlice";
 import { getBackground, getLogoOverlay, toDataURL } from "../common/helpers";
-import { Bayc } from "../models";
-import BaycLockscreenPlaceholder from "../assets/bayc/bayc-lockscreen-placeholder.png";
+import { MaycTraits } from "../models";
+import MaycLockscreenPlaceholderWithOverlay from "../assets/mayc/mayc-lockscreen-placeholder-with-overlay.png";
+import MaycLockscreenPlaceholderNoOverlay from "../assets/mayc/mayc-lockscreen-placeholder-no-overlay.png";
 import Mockup from "../assets/mockup.png";
 import Overlay from "../assets/overlay.png";
 import ImageDisplayModeToggle from "./ImageDisplayModeToggle";
+import { selectMaycDetails } from "../features/maycDetailsSlice";
 
-const GeneratedImage: React.FC = () => {
+const GeneratedMaycImage: React.FC = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
 
-  const baycMetadata = useAppSelector(selectBaycMetadata);
+  const maycDetails = useAppSelector(selectMaycDetails);
   const {
     imageDisplayMode,
     showLockscreenOverlay,
-    isGeneratingImage,
-    selectedBaycId,
-    generatedBaycBackground,
-    selectedBaycLogoOverlay,
+    isGeneratingMaycImage,
+    selectedMaycId,
+    generatedMaycBackground,
+    selectedMaycLogoOverlay,
   } = useAppSelector(selectUserInput);
 
   const [withOverlay, setWithOverlay] = useState<string>(
-    BaycLockscreenPlaceholder
+    MaycLockscreenPlaceholderWithOverlay
   );
   const [withoutOverlay, setWithoutOverlay] = useState<string>(
-    BaycLockscreenPlaceholder
+    MaycLockscreenPlaceholderNoOverlay
   );
 
   useEffect(() => {
-    dispatch(setIsGeneratingImage(true));
+    dispatch(setIsGeneratingMaycImage(true));
 
-    const baycBackground = baycMetadata.value?.collection.find(
-      (bayc: Bayc) => bayc.tokenId === selectedBaycId
-    )?.traits.background;
+    const maycBackground = maycDetails.value?.attributes.find(
+      (trait: MaycTraits) => trait.traitType === "Background"
+    )?.value;
 
-    if (!baycBackground) {
-      dispatch(setIsGeneratingImage(false));
+    if (!maycBackground && !maycDetails.value?.image) {
+      dispatch(setIsGeneratingMaycImage(false));
       return;
     }
 
     toDataURL(
-      `${config("ipfs").baseURL}${ipfs.baycImage(selectedBaycId)}`,
+      `${config("ipfs").baseURL}${ipfs.maycImage(
+        maycDetails.value?.image || ""
+      )}`,
       function (dataUrl: string | ArrayBuffer | null) {
         mergeImages(
           [
             {
-              src: getBackground("bayc", baycBackground),
+              src: getBackground("mayc", maycBackground),
               x: 0,
               y: 0,
             },
@@ -65,10 +68,10 @@ const GeneratedImage: React.FC = () => {
               x: -56,
               y: 1157,
             },
-            ...(selectedBaycLogoOverlay !== "none"
+            ...(selectedMaycLogoOverlay !== "none"
               ? [
                   {
-                    src: getLogoOverlay("bayc", selectedBaycLogoOverlay),
+                    src: getLogoOverlay("mayc", selectedMaycLogoOverlay),
                     x: 0,
                     y: 0,
                   },
@@ -77,7 +80,7 @@ const GeneratedImage: React.FC = () => {
           ],
           { width: 1151, height: 2419 }
         ).then((b64) => {
-          dispatch(setGeneratedBaycBackground(b64));
+          dispatch(setGeneratedMaycBackground(b64));
           mergeImages([
             {
               src: b64,
@@ -104,7 +107,7 @@ const GeneratedImage: React.FC = () => {
               },
             ]).then((b64) => {
               setWithOverlay(b64);
-              dispatch(setIsGeneratingImage(false));
+              dispatch(setIsGeneratingMaycImage(false));
             });
           });
         });
@@ -112,9 +115,9 @@ const GeneratedImage: React.FC = () => {
     );
   }, [
     dispatch,
-    selectedBaycId,
-    baycMetadata.value?.collection,
-    selectedBaycLogoOverlay,
+    maycDetails.value?.attributes,
+    maycDetails.value?.image,
+    selectedMaycLogoOverlay,
   ]);
 
   return (
@@ -126,7 +129,7 @@ const GeneratedImage: React.FC = () => {
     >
       {imageDisplayMode === "preview" ? (
         <Box position="relative">
-          {isGeneratingImage && (
+          {isGeneratingMaycImage && (
             <Box
               height={562}
               width={259}
@@ -146,14 +149,14 @@ const GeneratedImage: React.FC = () => {
           )}
           <img
             src={showLockscreenOverlay ? withOverlay : withoutOverlay}
-            alt={`bayc${selectedBaycId}`}
+            alt={`mayc${selectedMaycId}`}
             height={641.9}
             width={340.9}
           />
         </Box>
       ) : (
         <Box position="relative" mb={2} padding={3}>
-          {isGeneratingImage && (
+          {isGeneratingMaycImage && (
             <Box
               height={604.75}
               width={287.75}
@@ -169,8 +172,8 @@ const GeneratedImage: React.FC = () => {
             </Box>
           )}
           <img
-            src={generatedBaycBackground}
-            alt={`bayc${selectedBaycId}`}
+            src={generatedMaycBackground}
+            alt={`mayc${selectedMaycId}`}
             height={604.75}
             width={287.75}
           />
@@ -181,4 +184,4 @@ const GeneratedImage: React.FC = () => {
   );
 };
 
-export default GeneratedImage;
+export default GeneratedMaycImage;

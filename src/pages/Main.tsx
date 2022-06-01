@@ -1,14 +1,18 @@
 import React, { useEffect } from "react";
 import { Box, Card, useTheme } from "@mui/material";
-import { useAppDispatch } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { fetchBaycMetadata } from "../features/baycMetadataSlice";
 import NavBar from "../components/NavBar";
 import TabSelect from "../components/TabSelect";
-import GeneratedImage from "../components/GeneratedImage";
+import GeneratedBaycImage from "../components/GeneratedBaycImage";
+import { selectUserInput } from "../features/userInputSlice";
+import GeneratedMaycImage from "../components/GeneratedMaycImage";
 
 const Main: React.FC = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
+
+  const { nftMode } = useAppSelector(selectUserInput);
 
   useEffect(() => {
     dispatch(fetchBaycMetadata());
@@ -42,7 +46,11 @@ const Main: React.FC = () => {
             <TabSelect />
           </Card>
           <Box>
-            <GeneratedImage />
+            {nftMode === "bayc" ? (
+              <GeneratedBaycImage />
+            ) : (
+              <GeneratedMaycImage />
+            )}
           </Box>
         </Box>
       </Box>

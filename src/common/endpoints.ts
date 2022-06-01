@@ -6,5 +6,5 @@ export const ipfs = {
 };
 
 export const bayc = {
-  maycMetadata: (maycId: number) => `mutants/${maycId}`,
+  maycDetails: (maycId: number) => `mutants/${maycId}`,
 };

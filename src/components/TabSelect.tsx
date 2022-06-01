@@ -3,13 +3,18 @@ import { Box, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import InputSection from "./InputSection";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { selectUserInput, setNftMode } from "../features/userInputSlice";
+import {
+  selectUserInput,
+  setNftMode,
+  setShowLockscreenOverlay,
+} from "../features/userInputSlice";
 
 const TabSelect: React.FC = () => {
   const dispatch = useAppDispatch();
   const { nftMode } = useAppSelector(selectUserInput);
 
   const handleChange = (_: React.SyntheticEvent, newValue: "bayc" | "mayc") => {
+    dispatch(setShowLockscreenOverlay(true));
     dispatch(setNftMode(newValue));
   };
 
