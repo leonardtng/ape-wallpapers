@@ -15,7 +15,6 @@ import MaycLockscreenPlaceholderWithOverlay from "../assets/mayc/mayc-lockscreen
 import MaycLockscreenPlaceholderNoOverlay from "../assets/mayc/mayc-lockscreen-placeholder-no-overlay.png";
 import Mockup from "../assets/mockup.png";
 import Overlay from "../assets/overlay.png";
-import ImageDisplayModeToggle from "./ImageDisplayModeToggle";
 import { selectMaycDetails } from "../features/maycDetailsSlice";
 
 const GeneratedMaycImage: React.FC = () => {
@@ -121,12 +120,7 @@ const GeneratedMaycImage: React.FC = () => {
   ]);
 
   return (
-    <Box
-      display="flex"
-      alignItems="center"
-      justifyContent="space-between"
-      width="430px"
-    >
+    <>
       {imageDisplayMode === "preview" ? (
         <Box position="relative">
           {isGeneratingMaycImage && (
@@ -179,8 +173,7 @@ const GeneratedMaycImage: React.FC = () => {
           />
         </Box>
       )}
-      <ImageDisplayModeToggle />
-    </Box>
+    </>
   );
 };
 

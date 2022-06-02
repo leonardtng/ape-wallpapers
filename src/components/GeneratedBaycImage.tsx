@@ -14,10 +14,8 @@ import { getBackground, getLogoOverlay, toDataURL } from "../common/helpers";
 import { Bayc } from "../models";
 import BaycLockscreenPlaceholderWithOverlay from "../assets/bayc/bayc-lockscreen-placeholder-with-overlay.png";
 import BaycLockscreenPlaceholderNoOverlay from "../assets/bayc/bayc-lockscreen-placeholder-no-overlay.png";
-
 import Mockup from "../assets/mockup.png";
 import Overlay from "../assets/overlay.png";
-import ImageDisplayModeToggle from "./ImageDisplayModeToggle";
 
 const GeneratedBaycImage: React.FC = () => {
   const theme = useTheme();
@@ -120,12 +118,7 @@ const GeneratedBaycImage: React.FC = () => {
   ]);
 
   return (
-    <Box
-      display="flex"
-      alignItems="center"
-      justifyContent="space-between"
-      width="430px"
-    >
+    <>
       {imageDisplayMode === "preview" ? (
         <Box position="relative">
           {isGeneratingBaycImage && (
@@ -178,8 +171,7 @@ const GeneratedBaycImage: React.FC = () => {
           />
         </Box>
       )}
-      <ImageDisplayModeToggle />
-    </Box>
+    </>
   );
 };
 

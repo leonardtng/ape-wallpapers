@@ -29,7 +29,11 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   },
 }));
 
-const ImageDisplayModeToggle: React.FC = () => {
+interface Props {
+  orientation: "vertical" | "horizontal";
+}
+
+const ImageDisplayModeToggle: React.FC<Props> = (props: Props) => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const { imageDisplayMode } = useAppSelector(selectUserInput);
@@ -50,21 +54,23 @@ const ImageDisplayModeToggle: React.FC = () => {
         size="small"
         color="secondary"
         value={imageDisplayMode}
-        orientation="vertical"
+        orientation={props.orientation}
+        sx={{ width: { md: "unset", xs: "100%" } }}
       >
         <ToggleButton
           value="preview"
           onClick={() => dispatch(setImageDisplayMode("preview"))}
+          sx={{ width: { md: "unset", xs: "50%" } }}
         >
           Preview
         </ToggleButton>
         <ToggleButton
           value="jpg"
           onClick={() => dispatch(setImageDisplayMode("jpg"))}
+          sx={{ width: { md: "unset", xs: "50%" } }}
         >
           JPG
         </ToggleButton>
-        ,
       </StyledToggleButtonGroup>
     </Paper>
   );

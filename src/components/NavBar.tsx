@@ -2,12 +2,14 @@ import React from "react";
 import {
   AppBar,
   Box,
+  Hidden,
   Link,
   Toolbar,
   Typography,
   useTheme,
 } from "@mui/material";
-import Ape from "../assets/ape.svg";
+import ApeLogo from "../assets/ape-logo.svg";
+import { PhoneIphoneRounded } from "@mui/icons-material";
 
 const NavBar: React.FC = () => {
   const theme = useTheme();
@@ -21,10 +23,13 @@ const NavBar: React.FC = () => {
     >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <img src={Ape} alt="Ape" height="32" />
-          <Typography variant="h5" sx={{ ml: 2 }}>
-            Ape Lockscreens
-          </Typography>
+          <img src={ApeLogo} alt="Ape" height="26px" />
+          <PhoneIphoneRounded sx={{ height: "32px", ml: 1 }} />
+          <Hidden mdDown>
+            <Typography variant="h5" sx={{ ml: 1 }}>
+              Ape Lockscreens
+            </Typography>
+          </Hidden>
         </Box>
         <Box>
           <Typography variant="body1">
