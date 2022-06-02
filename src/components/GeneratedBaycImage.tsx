@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, CircularProgress, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { API_CONFIG as config } from "../common/constants";
 import { ipfs } from "../common/endpoints";
@@ -16,9 +16,12 @@ import BaycLockscreenPlaceholderWithOverlay from "../assets/bayc/bayc-lockscreen
 import BaycLockscreenPlaceholderNoOverlay from "../assets/bayc/bayc-lockscreen-placeholder-no-overlay.png";
 import Mockup from "../assets/mockup.png";
 import Overlay from "../assets/overlay.png";
+import {
+  LockscreenOverlayLoadingState,
+  PlainImageLoadingState,
+} from "./UI/ImageLoadingStates";
 
 const GeneratedBaycImage: React.FC = () => {
-  const theme = useTheme();
   const dispatch = useAppDispatch();
 
   const baycMetadata = useAppSelector(selectBaycMetadata);
@@ -121,24 +124,7 @@ const GeneratedBaycImage: React.FC = () => {
     <>
       {imageDisplayMode === "preview" ? (
         <Box position="relative">
-          {isGeneratingBaycImage && (
-            <Box
-              height={562}
-              width={259}
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              position="absolute"
-              sx={{
-                backgroundColor: `${theme.palette.background.paper}BB`,
-                top: "39px",
-                left: "41px",
-                borderRadius: "26px",
-              }}
-            >
-              <CircularProgress />
-            </Box>
-          )}
+          {isGeneratingBaycImage && <LockscreenOverlayLoadingState />}
           <img
             src={showLockscreenOverlay ? withOverlay : withoutOverlay}
             alt={`bayc${selectedBaycId}`}
@@ -148,21 +134,7 @@ const GeneratedBaycImage: React.FC = () => {
         </Box>
       ) : (
         <Box position="relative" mb={2} padding={3}>
-          {isGeneratingBaycImage && (
-            <Box
-              height={604.75}
-              width={287.75}
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              position="absolute"
-              sx={{
-                backgroundColor: `${theme.palette.background.paper}BB`,
-              }}
-            >
-              <CircularProgress />
-            </Box>
-          )}
+          {isGeneratingBaycImage && <PlainImageLoadingState />}
           <img
             src={generatedBaycBackground}
             alt={`bayc${selectedBaycId}`}

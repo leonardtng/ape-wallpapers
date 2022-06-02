@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 import { Box, Card, Hidden, useTheme } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { fetchBaycMetadata } from "../features/baycMetadataSlice";
-import NavBar from "../components/NavBar";
-import TabSelect from "../components/TabSelect";
+import NavBar from "../components/UI/NavBar";
+import TabSelect from "../components/UI/TabSelect";
 import GeneratedBaycImage from "../components/GeneratedBaycImage";
 import { selectUserInput } from "../features/userInputSlice";
 import GeneratedMaycImage from "../components/GeneratedMaycImage";
-import ImageDisplayModeToggle from "../components/ImageDisplayModeToggle";
+import ImageDisplayModeToggle from "../components/UI/ImageDisplayModeToggle";
 
 const Main: React.FC = () => {
   const theme = useTheme();

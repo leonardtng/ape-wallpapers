@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, CircularProgress, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { API_CONFIG as config } from "../common/constants";
 import { ipfs } from "../common/endpoints";
@@ -16,9 +16,12 @@ import MaycLockscreenPlaceholderNoOverlay from "../assets/mayc/mayc-lockscreen-p
 import Mockup from "../assets/mockup.png";
 import Overlay from "../assets/overlay.png";
 import { selectMaycDetails } from "../features/maycDetailsSlice";
+import {
+  LockscreenOverlayLoadingState,
+  PlainImageLoadingState,
+} from "./UI/ImageLoadingStates";
 
 const GeneratedMaycImage: React.FC = () => {
-  const theme = useTheme();
   const dispatch = useAppDispatch();
 
   const maycDetails = useAppSelector(selectMaycDetails);
@@ -123,24 +126,7 @@ const GeneratedMaycImage: React.FC = () => {
     <>
       {imageDisplayMode === "preview" ? (
         <Box position="relative">
-          {isGeneratingMaycImage && (
-            <Box
-              height={562}
-              width={259}
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              position="absolute"
-              sx={{
-                backgroundColor: `${theme.palette.background.paper}BB`,
-                top: "39px",
-                left: "41px",
-                borderRadius: "26px",
-              }}
-            >
-              <CircularProgress />
-            </Box>
-          )}
+          {isGeneratingMaycImage && <LockscreenOverlayLoadingState />}
           <img
             src={showLockscreenOverlay ? withOverlay : withoutOverlay}
             alt={`mayc${selectedMaycId}`}
@@ -150,21 +136,7 @@ const GeneratedMaycImage: React.FC = () => {
         </Box>
       ) : (
         <Box position="relative" mb={2} padding={3}>
-          {isGeneratingMaycImage && (
-            <Box
-              height={604.75}
-              width={287.75}
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              position="absolute"
-              sx={{
-                backgroundColor: `${theme.palette.background.paper}BB`,
-              }}
-            >
-              <CircularProgress />
-            </Box>
-          )}
+          {isGeneratingMaycImage && <PlainImageLoadingState />}
           <img
             src={generatedMaycBackground}
             alt={`mayc${selectedMaycId}`}

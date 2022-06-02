@@ -1,13 +1,13 @@
 import React from "react";
 import { Box, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import InputSection from "./InputSection";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import InputSection from "../InputSection";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   selectUserInput,
   setNftMode,
   setShowLockscreenOverlay,
-} from "../features/userInputSlice";
+} from "../../features/userInputSlice";
 
 const TabSelect: React.FC = () => {
   const dispatch = useAppDispatch();

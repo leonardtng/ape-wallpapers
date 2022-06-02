@@ -8,7 +8,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import ApeLogo from "../assets/ape-logo.svg";
+import ApeLogo from "../../assets/ape-logo.svg";
 import { PhoneIphoneRounded } from "@mui/icons-material";
 
 const NavBar: React.FC = () => {

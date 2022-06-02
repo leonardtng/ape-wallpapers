@@ -186,9 +186,6 @@ const InputSection = () => {
             fieldset: {
               border: "none",
             },
-            "&.MuiSvgIcon-root": {
-              color: "#ffffff !important",
-            },
           }}
           value={
             nftMode === "bayc" ? inputBaycLogoOverlay : inputMaycLogoOverlay
@@ -227,13 +224,16 @@ const InputSection = () => {
         variant="contained"
         sx={{
           width: "100%",
+          mb: 3,
           backgroundColor: `${theme.palette.primary.main} !important`,
           boxShadow: `0 0 10px ${theme.palette.primary.main} !important`,
           ":hover": {
             backgroundColor: theme.palette.primary.main,
             boxShadow: `0 0 20px ${theme.palette.primary.main} !important`,
           },
-          mb: 3,
+          "& .MuiLoadingButton-loadingIndicator": {
+            color: theme.palette.text.primary,
+          },
         }}
         onClick={handleSubmit}
       >
@@ -248,13 +248,16 @@ const InputSection = () => {
         variant="contained"
         sx={{
           width: "100%",
+          mb: 2,
           backgroundColor: `${theme.palette.secondary.main} !important`,
           boxShadow: `0 0 10px ${theme.palette.secondary.main} !important`,
           ":hover": {
             backgroundColor: theme.palette.secondary.main,
             boxShadow: `0 0 20px ${theme.palette.secondary.main} !important`,
           },
-          mb: 2,
+          "& .MuiLoadingButton-loadingIndicator": {
+            color: theme.palette.text.primary,
+          },
         }}
         onClick={handleDownload}
       >
@@ -270,11 +273,6 @@ const InputSection = () => {
             value={showLockscreenOverlay}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               dispatch(setShowLockscreenOverlay(event.target.checked));
-            }}
-            sx={{
-              "&.Mui-disabled": {
-                color: theme.palette.text.disabled,
-              },
             }}
           />
         }

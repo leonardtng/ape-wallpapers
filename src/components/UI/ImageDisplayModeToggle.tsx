@@ -6,11 +6,11 @@ import {
   ToggleButtonGroup,
   useTheme,
 } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   selectUserInput,
   setImageDisplayMode,
-} from "../features/userInputSlice";
+} from "../../features/userInputSlice";
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   "& .MuiToggleButtonGroup-grouped": {
