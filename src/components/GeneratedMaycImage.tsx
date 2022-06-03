@@ -115,12 +115,8 @@ const GeneratedMaycImage: React.FC = () => {
         });
       }
     );
-  }, [
-    dispatch,
-    maycDetails.value?.attributes,
-    maycDetails.value?.image,
-    selectedMaycLogoOverlay,
-  ]);
+    // eslint-disable-next-line
+  }, [dispatch, maycDetails.value?.attributes, maycDetails.value?.image]);
 
   return (
     <>

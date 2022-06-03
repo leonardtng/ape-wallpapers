@@ -1,7 +1,7 @@
 import BaycPurple from "../../assets/bayc/bayc-backgrounds/bayc-purple.png";
 import BaycYellow from "../../assets/bayc/bayc-backgrounds/bayc-yellow.png";
 import BaycAquamarine from "../../assets/bayc/bayc-backgrounds/bayc-aquamarine.png";
-import BaycArmyGreen from "../../assets/bayc/bayc-backgrounds/bayc-yellow.png";
+import BaycArmyGreen from "../../assets/bayc/bayc-backgrounds/bayc-army-green.png";
 import BaycBlue from "../../assets/bayc/bayc-backgrounds/bayc-blue.png";
 import BaycGray from "../../assets/bayc/bayc-backgrounds/bayc-gray.png";
 import BaycNewPunkBlue from "../../assets/bayc/bayc-backgrounds/bayc-new-punk-blue.png";
@@ -10,7 +10,7 @@ import BaycOrange from "../../assets/bayc/bayc-backgrounds/bayc-orange.png";
 import MaycPurple from "../../assets/mayc/mayc-backgrounds/mayc-purple.png";
 import MaycYellow from "../../assets/mayc/mayc-backgrounds/mayc-yellow.png";
 import MaycAquamarine from "../../assets/mayc/mayc-backgrounds/mayc-aquamarine.png";
-import MaycArmyGreen from "../../assets/mayc/mayc-backgrounds/mayc-yellow.png";
+import MaycArmyGreen from "../../assets/mayc/mayc-backgrounds/mayc-army-green.png";
 import MaycBlue from "../../assets/mayc/mayc-backgrounds/mayc-blue.png";
 import MaycGray from "../../assets/mayc/mayc-backgrounds/mayc-gray.png";
 import MaycNewPunkBlue from "../../assets/mayc/mayc-backgrounds/mayc-new-punk-blue.png";
@@ -37,7 +37,7 @@ export const getBackground = (
           return BaycYellow;
         case "Aquamarine":
           return BaycAquamarine;
-        case "Bayc Army Green":
+        case "Army Green":
           return BaycArmyGreen;
         case "Blue":
           return BaycBlue;
@@ -70,8 +70,8 @@ export const getBackground = (
         case "M1 Gray":
         case "M2 Gray":
           return MaycGray;
-        case "M1 Punk Blue":
-        case "M2 Punk Blue":
+        case "M1 New Punk Blue":
+        case "M2 New Punk Blue":
           return MaycNewPunkBlue;
         case "M1 Orange":
         case "M2 Orange":

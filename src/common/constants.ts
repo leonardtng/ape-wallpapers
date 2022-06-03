@@ -1,5 +1,8 @@
 import { AxiosRequestConfig } from "axios";
 
+const localUrl = "http://localhost:8000/";
+const prodUrl = "";
+
 export const API_CONFIG: (server: "ipfs" | "bayc") => AxiosRequestConfig = (
   server: "ipfs" | "bayc"
 ) => {
@@ -12,8 +15,7 @@ export const API_CONFIG: (server: "ipfs" | "bayc") => AxiosRequestConfig = (
       };
     case "bayc":
       return {
-        baseURL:
-          "https://cors-anywhere.herokuapp.com/https://boredapeyachtclub.com/api/",
+        baseURL: process.env.NODE_ENV === "production" ? prodUrl : localUrl,
         responseType: "json",
         method: "GET",
       };
