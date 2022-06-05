@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { selectBaycMetadata } from "../features/baycMetadataSlice";
 import { API_CONFIG as config } from "../common/constants";
 import { ipfs } from "../common/endpoints";
-import mergeImages from "merge-images";
+import { Bayc } from "../models";
+import BaycLockscreenPlaceholderWithOverlay from "../assets/bayc/bayc-lockscreen-placeholder-with-overlay.png";
+import BaycLockscreenPlaceholderNoOverlay from "../assets/bayc/bayc-lockscreen-placeholder-no-overlay.png";
 import {
   selectUserInput,
   setGeneratedBaycBackground,
   setIsGeneratingBaycImage,
 } from "../features/userInputSlice";
-import { selectBaycMetadata } from "../features/baycMetadataSlice";
-import { getBackground, getLogoOverlay, toDataURL } from "../common/helpers";
-import { Bayc } from "../models";
-import BaycLockscreenPlaceholderWithOverlay from "../assets/bayc/bayc-lockscreen-placeholder-with-overlay.png";
-import BaycLockscreenPlaceholderNoOverlay from "../assets/bayc/bayc-lockscreen-placeholder-no-overlay.png";
-import Mockup from "../assets/mockup.png";
-import Overlay from "../assets/overlay.png";
+import {
+  generateImage,
+  getBackground,
+  getLogoOverlay,
+} from "../common/helpers";
 import {
   LockscreenOverlayLoadingState,
   PlainImageLoadingState,
@@ -53,64 +54,15 @@ const GeneratedBaycImage: React.FC = () => {
       return;
     }
 
-    toDataURL(
+    generateImage(
       `${config("ipfs").baseURL}${ipfs.baycImage(selectedBaycId)}`,
-      function (dataUrl: string | ArrayBuffer | null) {
-        mergeImages(
-          [
-            {
-              src: getBackground("bayc", baycBackground),
-              x: 0,
-              y: 0,
-            },
-            {
-              src: dataUrl as string,
-              x: -56,
-              y: 1157,
-            },
-            ...(selectedBaycLogoOverlay !== "none"
-              ? [
-                  {
-                    src: getLogoOverlay("bayc", selectedBaycLogoOverlay),
-                    x: 0,
-                    y: 0,
-                  },
-                ]
-              : []),
-          ],
-          { width: 1151, height: 2419 }
-        ).then((b64) => {
-          dispatch(setGeneratedBaycBackground(b64));
-          mergeImages([
-            {
-              src: b64,
-              x: 155,
-              y: 166,
-            },
-            {
-              src: Mockup,
-              x: 0,
-              y: 0,
-            },
-          ]).then((b64) => {
-            setWithoutOverlay(b64);
-            mergeImages([
-              {
-                src: b64,
-                x: 0,
-                y: 0,
-              },
-              {
-                src: Overlay,
-                x: 0,
-                y: 0,
-              },
-            ]).then((b64) => {
-              setWithOverlay(b64);
-              dispatch(setIsGeneratingBaycImage(false));
-            });
-          });
-        });
+      getBackground("bayc", baycBackground),
+      getLogoOverlay("bayc", selectedBaycLogoOverlay),
+      (generatedImage: string, withoutOverlay: string, withOverlay: string) => {
+        dispatch(setGeneratedBaycBackground(generatedImage));
+        setWithoutOverlay(withoutOverlay);
+        setWithOverlay(withOverlay);
+        dispatch(setIsGeneratingBaycImage(false));
       }
     );
   }, [

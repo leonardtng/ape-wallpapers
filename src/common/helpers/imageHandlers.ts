@@ -1,3 +1,10 @@
+import mergeImages from "merge-images";
+
+// Mockup and Overlay
+import Mockup from "../../assets/mockup.png";
+import Overlay from "../../assets/overlay.png";
+
+// BAYC Backgrounds
 import BaycPurple from "../../assets/bayc/bayc-backgrounds/bayc-purple.png";
 import BaycYellow from "../../assets/bayc/bayc-backgrounds/bayc-yellow.png";
 import BaycAquamarine from "../../assets/bayc/bayc-backgrounds/bayc-aquamarine.png";
@@ -7,6 +14,7 @@ import BaycGray from "../../assets/bayc/bayc-backgrounds/bayc-gray.png";
 import BaycNewPunkBlue from "../../assets/bayc/bayc-backgrounds/bayc-new-punk-blue.png";
 import BaycOrange from "../../assets/bayc/bayc-backgrounds/bayc-orange.png";
 
+// MAYC Backgrounds
 import MaycPurple from "../../assets/mayc/mayc-backgrounds/mayc-purple.png";
 import MaycYellow from "../../assets/mayc/mayc-backgrounds/mayc-yellow.png";
 import MaycAquamarine from "../../assets/mayc/mayc-backgrounds/mayc-aquamarine.png";
@@ -17,9 +25,11 @@ import MaycNewPunkBlue from "../../assets/mayc/mayc-backgrounds/mayc-new-punk-bl
 import MaycOrange from "../../assets/mayc/mayc-backgrounds/mayc-orange.png";
 import MaycMega from "../../assets/mayc/mayc-backgrounds/mayc-mega.png";
 
+// BAYC Logo Overlays
 import BaycLogoBlack from "../../assets/bayc/bayc-logo-overlay/bayc-logo-black.png";
 import BaycLogoWhite from "../../assets/bayc/bayc-logo-overlay/bayc-logo-white.png";
 
+// MAYC Logo Overlays
 import MaycLogoSlime from "../../assets/mayc/mayc-logo-overlay/mayc-logo-slime.png";
 import MaycLogoBlack from "../../assets/mayc/mayc-logo-overlay/mayc-logo-black.png";
 import MaycLogoWhite from "../../assets/mayc/mayc-logo-overlay/mayc-logo-white.png";
@@ -93,7 +103,7 @@ export const getLogoOverlay = (type: "bayc" | "mayc", logoOverlay: string) => {
         case "baycLogoWhite":
           return BaycLogoWhite;
         default:
-          return BaycLogoBlack;
+          return "none";
       }
     case "mayc":
       switch (logoOverlay) {
@@ -101,27 +111,95 @@ export const getLogoOverlay = (type: "bayc" | "mayc", logoOverlay: string) => {
           return MaycLogoSlime;
         case "maycLogoBlack":
           return MaycLogoBlack;
-        default:
+        case "maycLogoWhite":
           return MaycLogoWhite;
+        default:
+          return "none";
       }
     default:
-      return BaycPurple;
+      return "none";
   }
 };
 
-export const toDataURL = (
-  url: string,
-  callback: (result: string | ArrayBuffer | null) => void
+export const generateImage = (
+  ipfsUrl: string,
+  background: string,
+  overlay: string,
+  handleResults: (
+    generatedImage: string,
+    withoutOverlay: string,
+    withOverlay: string
+  ) => void
 ) => {
-  var xhr = new XMLHttpRequest();
-  xhr.onload = function () {
-    var reader = new FileReader();
-    reader.onloadend = function () {
-      callback(reader.result);
+  const toDataURL = (
+    url: string,
+    callback: (result: string | ArrayBuffer | null) => void
+  ) => {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      var reader = new FileReader();
+      reader.onloadend = function () {
+        callback(reader.result);
+      };
+      reader.readAsDataURL(xhr.response);
     };
-    reader.readAsDataURL(xhr.response);
+    xhr.open("GET", url);
+    xhr.responseType = "blob";
+    xhr.send();
   };
-  xhr.open("GET", url);
-  xhr.responseType = "blob";
-  xhr.send();
+
+  toDataURL(ipfsUrl, function (dataUrl: string | ArrayBuffer | null) {
+    mergeImages(
+      [
+        {
+          src: background,
+          x: 0,
+          y: 0,
+        },
+        {
+          src: dataUrl as string,
+          x: -56,
+          y: 1157,
+        },
+        ...(overlay !== "none"
+          ? [
+              {
+                src: overlay,
+                x: 0,
+                y: 0,
+              },
+            ]
+          : []),
+      ],
+      { width: 1151, height: 2419 }
+    ).then((generatedImage) => {
+      mergeImages([
+        {
+          src: generatedImage,
+          x: 155,
+          y: 166,
+        },
+        {
+          src: Mockup,
+          x: 0,
+          y: 0,
+        },
+      ]).then((withoutOverlay) => {
+        mergeImages([
+          {
+            src: withoutOverlay,
+            x: 0,
+            y: 0,
+          },
+          {
+            src: Overlay,
+            x: 0,
+            y: 0,
+          },
+        ]).then((withOverlay) => {
+          handleResults(generatedImage, withoutOverlay, withOverlay);
+        });
+      });
+    });
+  });
 };

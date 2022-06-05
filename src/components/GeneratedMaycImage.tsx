@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { selectMaycDetails } from "../features/maycDetailsSlice";
 import { API_CONFIG as config } from "../common/constants";
 import { ipfs } from "../common/endpoints";
-import mergeImages from "merge-images";
+import { MaycTraits } from "../models";
+import MaycLockscreenPlaceholderWithOverlay from "../assets/mayc/mayc-lockscreen-placeholder-with-overlay.png";
+import MaycLockscreenPlaceholderNoOverlay from "../assets/mayc/mayc-lockscreen-placeholder-no-overlay.png";
 import {
   selectUserInput,
   setGeneratedMaycBackground,
   setIsGeneratingMaycImage,
 } from "../features/userInputSlice";
-import { getBackground, getLogoOverlay, toDataURL } from "../common/helpers";
-import { MaycTraits } from "../models";
-import MaycLockscreenPlaceholderWithOverlay from "../assets/mayc/mayc-lockscreen-placeholder-with-overlay.png";
-import MaycLockscreenPlaceholderNoOverlay from "../assets/mayc/mayc-lockscreen-placeholder-no-overlay.png";
-import Mockup from "../assets/mockup.png";
-import Overlay from "../assets/overlay.png";
-import { selectMaycDetails } from "../features/maycDetailsSlice";
+import {
+  generateImage,
+  getBackground,
+  getLogoOverlay,
+} from "../common/helpers";
 import {
   LockscreenOverlayLoadingState,
   PlainImageLoadingState,
@@ -53,66 +54,17 @@ const GeneratedMaycImage: React.FC = () => {
       return;
     }
 
-    toDataURL(
+    generateImage(
       `${config("ipfs").baseURL}${ipfs.maycImage(
         maycDetails.value?.image || ""
       )}`,
-      function (dataUrl: string | ArrayBuffer | null) {
-        mergeImages(
-          [
-            {
-              src: getBackground("mayc", maycBackground),
-              x: 0,
-              y: 0,
-            },
-            {
-              src: dataUrl as string,
-              x: -56,
-              y: 1157,
-            },
-            ...(selectedMaycLogoOverlay !== "none"
-              ? [
-                  {
-                    src: getLogoOverlay("mayc", selectedMaycLogoOverlay),
-                    x: 0,
-                    y: 0,
-                  },
-                ]
-              : []),
-          ],
-          { width: 1151, height: 2419 }
-        ).then((b64) => {
-          dispatch(setGeneratedMaycBackground(b64));
-          mergeImages([
-            {
-              src: b64,
-              x: 155,
-              y: 166,
-            },
-            {
-              src: Mockup,
-              x: 0,
-              y: 0,
-            },
-          ]).then((b64) => {
-            setWithoutOverlay(b64);
-            mergeImages([
-              {
-                src: b64,
-                x: 0,
-                y: 0,
-              },
-              {
-                src: Overlay,
-                x: 0,
-                y: 0,
-              },
-            ]).then((b64) => {
-              setWithOverlay(b64);
-              dispatch(setIsGeneratingMaycImage(false));
-            });
-          });
-        });
+      getBackground("mayc", maycBackground),
+      getLogoOverlay("mayc", selectedMaycLogoOverlay),
+      (generatedImage: string, withoutOverlay: string, withOverlay: string) => {
+        dispatch(setGeneratedMaycBackground(generatedImage));
+        setWithoutOverlay(withoutOverlay);
+        setWithOverlay(withOverlay);
+        dispatch(setIsGeneratingMaycImage(false));
       }
     );
     // eslint-disable-next-line
