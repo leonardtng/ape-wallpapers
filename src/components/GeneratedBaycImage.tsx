@@ -17,10 +17,7 @@ import {
   getBackground,
   getLogoOverlay,
 } from "../common/helpers";
-import {
-  LockscreenOverlayLoadingState,
-  PlainImageLoadingState,
-} from "./UI/ImageLoadingStates";
+import ImageLoadingState from "./UI/ImageLoadingState";
 
 const GeneratedBaycImage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -76,7 +73,7 @@ const GeneratedBaycImage: React.FC = () => {
     <>
       {imageDisplayMode === "preview" ? (
         <Box position="relative">
-          {isGeneratingBaycImage && <LockscreenOverlayLoadingState />}
+          {isGeneratingBaycImage && <ImageLoadingState type="overlay" />}
           <img
             src={showLockscreenOverlay ? withOverlay : withoutOverlay}
             alt={`bayc${selectedBaycId}`}
@@ -86,7 +83,7 @@ const GeneratedBaycImage: React.FC = () => {
         </Box>
       ) : (
         <Box position="relative" mb={2} padding={3}>
-          {isGeneratingBaycImage && <PlainImageLoadingState />}
+          {isGeneratingBaycImage && <ImageLoadingState type="plain" />}
           <img
             src={generatedBaycBackground}
             alt={`bayc${selectedBaycId}`}

@@ -17,10 +17,7 @@ import {
   getBackground,
   getLogoOverlay,
 } from "../common/helpers";
-import {
-  LockscreenOverlayLoadingState,
-  PlainImageLoadingState,
-} from "./UI/ImageLoadingStates";
+import ImageLoadingState from "./UI/ImageLoadingState";
 
 const GeneratedMaycImage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -74,7 +71,7 @@ const GeneratedMaycImage: React.FC = () => {
     <>
       {imageDisplayMode === "preview" ? (
         <Box position="relative">
-          {isGeneratingMaycImage && <LockscreenOverlayLoadingState />}
+          {isGeneratingMaycImage && <ImageLoadingState type="overlay" />}
           <img
             src={showLockscreenOverlay ? withOverlay : withoutOverlay}
             alt={`mayc${selectedMaycId}`}
@@ -84,7 +81,7 @@ const GeneratedMaycImage: React.FC = () => {
         </Box>
       ) : (
         <Box position="relative" mb={2} padding={3}>
-          {isGeneratingMaycImage && <PlainImageLoadingState />}
+          {isGeneratingMaycImage && <ImageLoadingState type="plain" />}
           <img
             src={generatedMaycBackground}
             alt={`mayc${selectedMaycId}`}

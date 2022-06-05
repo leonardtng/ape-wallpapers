@@ -8,6 +8,7 @@ import GeneratedBaycImage from "../components/GeneratedBaycImage";
 import { selectUserInput } from "../features/userInputSlice";
 import GeneratedMaycImage from "../components/GeneratedMaycImage";
 import ImageDisplayModeToggle from "../components/UI/ImageDisplayModeToggle";
+import ErrorSnackbar from "../components/UI/ErrorSnackbar";
 
 const Main: React.FC = () => {
   const theme = useTheme();
@@ -100,6 +101,7 @@ const Main: React.FC = () => {
           </Box>
         </Box>
       </Box>
+      <ErrorSnackbar />
     </Box>
   );
 };
