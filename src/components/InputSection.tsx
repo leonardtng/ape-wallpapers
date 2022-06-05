@@ -134,7 +134,13 @@ const InputSection = () => {
   ];
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center">
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      component="form"
+      onSubmit={handleSubmit}
+    >
       <Box width="100%">
         <Typography variant="body2" sx={{ ml: 1, mb: 1 }}>
           {nftMode === "bayc" ? "BAYC ID" : "MAYC ID"}
@@ -225,6 +231,7 @@ const InputSection = () => {
           (nftMode === "mayc" && isGeneratingMaycImage)
         }
         variant="contained"
+        type="submit"
         sx={{
           width: "100%",
           mb: 3,
