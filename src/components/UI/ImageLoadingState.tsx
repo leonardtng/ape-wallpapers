@@ -21,7 +21,7 @@ const ImageLoadingState: React.FC<Props> = ({ type }: Props) => {
       setProgress((prevProgress) =>
         prevProgress < 100 ? prevProgress + 1 : prevProgress
       );
-    }, 200);
+    }, 350);
     return () => {
       clearInterval(timer);
     };
