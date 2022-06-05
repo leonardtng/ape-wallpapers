@@ -143,6 +143,9 @@ const InputSection = () => {
           fullWidth
           focused
           defaultValue={nftMode === "bayc" ? selectedBaycId : selectedMaycId}
+          onFocus={(event) => {
+            event.target.select();
+          }}
           color="primary"
           type="number"
           sx={{
