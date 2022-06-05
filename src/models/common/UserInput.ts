@@ -1,6 +1,6 @@
 export interface UserInputState {
   nftMode: "bayc" | "mayc";
-  imageDisplayMode: "preview" | "jpg";
+  imageDisplayMode: "preview" | "jpeg";
   showLockscreenOverlay: boolean;
 
   isGeneratingBaycImage: boolean;

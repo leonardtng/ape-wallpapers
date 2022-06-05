@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from "axios";
 
-const localUrl = "http://localhost:8000/";
-const prodUrl = "";
+const localUrl = "https://bayc-api-proxy.herokuapp.com/";
+const prodUrl = "https://bayc-api-proxy.herokuapp.com/";
 
 export const API_CONFIG: (server: "ipfs" | "bayc") => AxiosRequestConfig = (
   server: "ipfs" | "bayc"

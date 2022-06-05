@@ -18,6 +18,7 @@ import {
   getLogoOverlay,
 } from "../common/helpers";
 import ImageLoadingState from "./UI/ImageLoadingState";
+import Bayc8469 from "../assets/bayc/bayc8469.png";
 
 const GeneratedBaycImage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -52,7 +53,9 @@ const GeneratedBaycImage: React.FC = () => {
     }
 
     generateImage(
-      `${config("ipfs").baseURL}${ipfs.baycImage(selectedBaycId)}`,
+      selectedBaycId === 8469
+        ? Bayc8469
+        : `${config("ipfs").baseURL}${ipfs.baycImage(selectedBaycId)}`,
       getBackground("bayc", baycBackground),
       getLogoOverlay("bayc", selectedBaycLogoOverlay),
       (generatedImage: string, withoutOverlay: string, withOverlay: string) => {

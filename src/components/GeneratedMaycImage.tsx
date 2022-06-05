@@ -18,6 +18,7 @@ import {
   getLogoOverlay,
 } from "../common/helpers";
 import ImageLoadingState from "./UI/ImageLoadingState";
+import Mayc0 from "../assets/mayc/mayc0.png";
 
 const GeneratedMaycImage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -52,9 +53,11 @@ const GeneratedMaycImage: React.FC = () => {
     }
 
     generateImage(
-      `${config("ipfs").baseURL}${ipfs.maycImage(
-        maycDetails.value?.image || ""
-      )}`,
+      selectedMaycId === 0
+        ? Mayc0
+        : `${config("ipfs").baseURL}${ipfs.maycImage(
+            maycDetails.value?.image || ""
+          )}`,
       getBackground("mayc", maycBackground),
       getLogoOverlay("mayc", selectedMaycLogoOverlay),
       (generatedImage: string, withoutOverlay: string, withOverlay: string) => {

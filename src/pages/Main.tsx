@@ -9,6 +9,7 @@ import { selectUserInput } from "../features/userInputSlice";
 import GeneratedMaycImage from "../components/GeneratedMaycImage";
 import ImageDisplayModeToggle from "../components/UI/ImageDisplayModeToggle";
 import ErrorSnackbar from "../components/UI/ErrorSnackbar";
+import Footer from "../components/UI/Footer";
 
 const Main: React.FC = () => {
   const theme = useTheme();
@@ -101,6 +102,7 @@ const Main: React.FC = () => {
           </Box>
         </Box>
       </Box>
+      <Footer />
       <ErrorSnackbar />
     </Box>
   );

@@ -27,7 +27,7 @@ const NavBar: React.FC = () => {
           <PhoneIphoneRounded sx={{ height: "32px", ml: 1 }} />
           <Hidden mdDown>
             <Typography variant="h5" sx={{ ml: 1 }}>
-              Ape Lockscreens
+              Ape Wallpapers
             </Typography>
           </Hidden>
         </Box>

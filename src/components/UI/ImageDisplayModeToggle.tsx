@@ -65,11 +65,11 @@ const ImageDisplayModeToggle: React.FC<Props> = (props: Props) => {
           Preview
         </ToggleButton>
         <ToggleButton
-          value="jpg"
-          onClick={() => dispatch(setImageDisplayMode("jpg"))}
+          value="jpeg"
+          onClick={() => dispatch(setImageDisplayMode("jpeg"))}
           sx={{ width: { md: "unset", xs: "50%" } }}
         >
-          JPG
+          JPEG
         </ToggleButton>
       </StyledToggleButtonGroup>
     </Paper>
