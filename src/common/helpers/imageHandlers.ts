@@ -129,7 +129,8 @@ export const generateImage = (
     generatedImage: string,
     withoutOverlay: string,
     withOverlay: string
-  ) => void
+  ) => void,
+  leftOffset: boolean = false
 ) => {
   const toDataURL = (
     url: string,
@@ -158,7 +159,7 @@ export const generateImage = (
         },
         {
           src: dataUrl as string,
-          x: -56,
+          x: leftOffset ? -76 : -56,
           y: 1157,
         },
         ...(overlay !== "none"

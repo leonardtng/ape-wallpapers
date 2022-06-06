@@ -52,6 +52,10 @@ const GeneratedMaycImage: React.FC = () => {
       return;
     }
 
+    const mouthTrait = maycDetails.value?.attributes.find(
+      (trait: MaycTraits) => trait.traitType === "Mouth"
+    )?.value;
+
     generateImage(
       selectedMaycId === 0
         ? Mayc0
@@ -65,7 +69,9 @@ const GeneratedMaycImage: React.FC = () => {
         setWithoutOverlay(withoutOverlay);
         setWithOverlay(withOverlay);
         dispatch(setIsGeneratingMaycImage(false));
-      }
+      },
+      mouthTrait === "M1 Bored Cigarette" ||
+        mouthTrait === "M1 Bored Unshaven Cigarette"
     );
     // eslint-disable-next-line
   }, [dispatch, maycDetails.value?.attributes, maycDetails.value?.image]);
