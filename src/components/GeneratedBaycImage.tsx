@@ -85,7 +85,7 @@ const GeneratedBaycImage: React.FC = () => {
           />
         </Box>
       ) : (
-        <Box position="relative" mb={2} padding={3}>
+        <Box position="relative" padding={3}>
           {isGeneratingBaycImage && <ImageLoadingState type="plain" />}
           <img
             src={generatedBaycBackground}

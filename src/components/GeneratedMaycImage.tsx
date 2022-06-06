@@ -83,7 +83,7 @@ const GeneratedMaycImage: React.FC = () => {
           />
         </Box>
       ) : (
-        <Box position="relative" mb={2} padding={3}>
+        <Box position="relative" padding={3}>
           {isGeneratingMaycImage && <ImageLoadingState type="plain" />}
           <img
             src={generatedMaycBackground}

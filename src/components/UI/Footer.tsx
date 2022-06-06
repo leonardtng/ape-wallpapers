@@ -17,10 +17,7 @@ const Footer = () => {
           md: "flex",
           xs: "block",
         },
-        position: {
-          md: "absolute",
-          xs: "relative",
-        },
+        position: "relative",
       }}
     >
       <Typography
@@ -30,7 +27,7 @@ const Footer = () => {
           justifyContent: "center",
         }}
       >
-        Buy me a coffee! <CoffeeRounded sx={{ height: 18 }} />
+        Liked the site? Buy me a coffee! <CoffeeRounded sx={{ height: 18 }} />
       </Typography>
       <Link
         href="https://etherscan.io/address/0x615114feb4b7e38a27e0a33bbc6619420c5f6a91"

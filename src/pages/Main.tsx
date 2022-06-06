@@ -23,10 +23,10 @@ const Main: React.FC = () => {
 
   return (
     <Box
-      height="calc(100vh - 64px)"
+      minHeight="650px"
       sx={{
         height: {
-          md: "calc(100vh - 64px)",
+          md: "calc(100vh - 64px - 64px)",
           xs: "fit-content",
         },
         backgroundColor: theme.palette.background.default,
@@ -42,13 +42,10 @@ const Main: React.FC = () => {
             },
             justifyContent: "center",
             alignItems: "center",
+            mt: 3,
             padding: {
               md: 3,
               xs: 1,
-            },
-            mt: {
-              md: 0,
-              xs: 3,
             },
           }}
         >
