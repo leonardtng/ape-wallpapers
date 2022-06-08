@@ -5,8 +5,8 @@ import { selectMaycDetails } from "../features/maycDetailsSlice";
 import { API_CONFIG as config } from "../common/constants";
 import { ipfs } from "../common/endpoints";
 import { MaycTraits } from "../models";
-import MaycLockscreenPlaceholderWithOverlay from "../assets/mayc/mayc-lockscreen-placeholder-with-overlay.png";
-import MaycLockscreenPlaceholderNoOverlay from "../assets/mayc/mayc-lockscreen-placeholder-no-overlay.png";
+import MaycLockscreenPlaceholderWithOverlay from "../assets/placeholders/mayc/mayc-lockscreen-placeholder-with-overlay.png";
+import MaycLockscreenPlaceholderNoOverlay from "../assets/placeholders/mayc/mayc-lockscreen-placeholder-no-overlay.png";
 import {
   selectUserInput,
   setGeneratedMaycBackground,
@@ -18,7 +18,7 @@ import {
   getLogoOverlay,
 } from "../common/helpers";
 import ImageLoadingState from "./UI/ImageLoadingState";
-import Mayc0 from "../assets/mayc/mayc0.png";
+import Mayc0 from "../assets/placeholders/mayc/mayc0.png";
 
 const GeneratedMaycImage: React.FC = () => {
   const dispatch = useAppDispatch();

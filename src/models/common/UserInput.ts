@@ -6,14 +6,27 @@ export interface UserInputState {
   isGeneratingBaycImage: boolean;
   selectedBaycId: number;
   generatedBaycBackground: string;
-  selectedBaycLogoOverlay: "none" | "baycLogoBlack" | "baycLogoWhite";
+  selectedBaycLogoOverlay:
+    | "none"
+    | "black"
+    | "white"
+    | "apeFestDefault"
+    | "apeFest1"
+    | "apeFest2"
+    | "apeFest3"
+    | "apeFest4";
 
   isGeneratingMaycImage: boolean;
   selectedMaycId: number;
   generatedMaycBackground: string;
   selectedMaycLogoOverlay:
     | "none"
-    | "maycLogoSlime"
-    | "maycLogoBlack"
-    | "maycLogoWhite";
+    | "slime"
+    | "black"
+    | "white"
+    | "apeFestDefault"
+    | "apeFest1"
+    | "apeFest2"
+    | "apeFest3"
+    | "apeFest4";
 }

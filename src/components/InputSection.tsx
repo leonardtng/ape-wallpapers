@@ -99,38 +99,63 @@ const InputSection = () => {
     a.remove();
   };
 
-  const baycLogoOverlay = [
+  const sharedOverlays = [
     {
-      value: "none",
-      label: "None",
+      value: "apeFestDefault",
+      label: "ApeFest '22 Default",
     },
     {
-      value: "baycLogoBlack",
-      label: "BAYC Logo Black",
+      value: "apeFest1",
+      label: "ApeFest '22 Graffiti 1",
     },
     {
-      value: "baycLogoWhite",
-      label: "BAYC Logo White",
+      value: "apeFest2",
+      label: "ApeFest '22 Graffiti 2",
+    },
+    {
+      value: "apeFest3",
+      label: "ApeFest '22 Graffiti 3",
+    },
+    {
+      value: "apeFest4",
+      label: "ApeFest '22 Graffiti 4",
     },
   ];
 
-  const maycLogoOverlay = [
+  const baycLogoOverlays = [
     {
       value: "none",
       label: "None",
     },
     {
-      value: "maycLogoSlime",
+      value: "black",
+      label: "BAYC Logo Black",
+    },
+    {
+      value: "white",
+      label: "BAYC Logo White",
+    },
+    ...sharedOverlays,
+  ];
+
+  const maycLogoOverlays = [
+    {
+      value: "none",
+      label: "None",
+    },
+    {
+      value: "slime",
       label: "MAYC Logo Slime",
     },
     {
-      value: "maycLogoBlack",
+      value: "black",
       label: "MAYC Logo Black",
     },
     {
-      value: "maycLogoWhite",
+      value: "white",
       label: "MAYC Logo White",
     },
+    ...sharedOverlays,
   ];
 
   return (
@@ -212,12 +237,12 @@ const InputSection = () => {
           }}
         >
           {nftMode === "bayc"
-            ? baycLogoOverlay.map((logoOverlay) => (
+            ? baycLogoOverlays.map((logoOverlay) => (
                 <MenuItem key={logoOverlay.value} value={logoOverlay.value}>
                   {logoOverlay.label}
                 </MenuItem>
               ))
-            : maycLogoOverlay.map((logoOverlay) => (
+            : maycLogoOverlays.map((logoOverlay) => (
                 <MenuItem key={logoOverlay.value} value={logoOverlay.value}>
                   {logoOverlay.label}
                 </MenuItem>

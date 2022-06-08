@@ -6,8 +6,8 @@ import {
 } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 import { UserInputState } from "../models";
-import BaycLockscreenPlaceholder from "../assets/bayc/bayc-generated-default.png";
-import MaycLockscreenPlaceholder from "../assets/mayc/mayc-generated-default.png";
+import BaycLockscreenPlaceholder from "../assets/placeholders/bayc/bayc-generated-default.png";
+import MaycLockscreenPlaceholder from "../assets/placeholders/mayc/mayc-generated-default.png";
 
 interface Reducers extends SliceCaseReducers<UserInputState> {
   setNftMode: (
@@ -65,11 +65,11 @@ const initialState: UserInputState = {
   isGeneratingBaycImage: false,
   selectedBaycId: 8469,
   generatedBaycBackground: BaycLockscreenPlaceholder,
-  selectedBaycLogoOverlay: "baycLogoWhite",
+  selectedBaycLogoOverlay: "white",
   isGeneratingMaycImage: false,
   selectedMaycId: 0,
   generatedMaycBackground: MaycLockscreenPlaceholder,
-  selectedMaycLogoOverlay: "maycLogoSlime",
+  selectedMaycLogoOverlay: "slime",
 };
 
 export const selectUserInput: (state: RootState) => UserInputState = (

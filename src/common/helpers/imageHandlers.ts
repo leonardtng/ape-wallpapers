@@ -5,34 +5,41 @@ import Mockup from "../../assets/mockup.png";
 import Overlay from "../../assets/overlay.png";
 
 // BAYC Backgrounds
-import BaycPurple from "../../assets/bayc/bayc-backgrounds/bayc-purple.png";
-import BaycYellow from "../../assets/bayc/bayc-backgrounds/bayc-yellow.png";
-import BaycAquamarine from "../../assets/bayc/bayc-backgrounds/bayc-aquamarine.png";
-import BaycArmyGreen from "../../assets/bayc/bayc-backgrounds/bayc-army-green.png";
-import BaycBlue from "../../assets/bayc/bayc-backgrounds/bayc-blue.png";
-import BaycGray from "../../assets/bayc/bayc-backgrounds/bayc-gray.png";
-import BaycNewPunkBlue from "../../assets/bayc/bayc-backgrounds/bayc-new-punk-blue.png";
-import BaycOrange from "../../assets/bayc/bayc-backgrounds/bayc-orange.png";
+import BaycPurple from "../../assets/backgrounds/bayc/bayc-purple.png";
+import BaycYellow from "../../assets/backgrounds/bayc/bayc-yellow.png";
+import BaycAquamarine from "../../assets/backgrounds/bayc/bayc-aquamarine.png";
+import BaycArmyGreen from "../../assets/backgrounds/bayc/bayc-army-green.png";
+import BaycBlue from "../../assets/backgrounds/bayc/bayc-blue.png";
+import BaycGray from "../../assets/backgrounds/bayc/bayc-gray.png";
+import BaycNewPunkBlue from "../../assets/backgrounds/bayc/bayc-new-punk-blue.png";
+import BaycOrange from "../../assets/backgrounds/bayc/bayc-orange.png";
 
 // MAYC Backgrounds
-import MaycPurple from "../../assets/mayc/mayc-backgrounds/mayc-purple.png";
-import MaycYellow from "../../assets/mayc/mayc-backgrounds/mayc-yellow.png";
-import MaycAquamarine from "../../assets/mayc/mayc-backgrounds/mayc-aquamarine.png";
-import MaycArmyGreen from "../../assets/mayc/mayc-backgrounds/mayc-army-green.png";
-import MaycBlue from "../../assets/mayc/mayc-backgrounds/mayc-blue.png";
-import MaycGray from "../../assets/mayc/mayc-backgrounds/mayc-gray.png";
-import MaycNewPunkBlue from "../../assets/mayc/mayc-backgrounds/mayc-new-punk-blue.png";
-import MaycOrange from "../../assets/mayc/mayc-backgrounds/mayc-orange.png";
-import MaycMega from "../../assets/mayc/mayc-backgrounds/mayc-mega.png";
+import MaycPurple from "../../assets/backgrounds/mayc/mayc-purple.png";
+import MaycYellow from "../../assets/backgrounds/mayc/mayc-yellow.png";
+import MaycAquamarine from "../../assets/backgrounds/mayc/mayc-aquamarine.png";
+import MaycArmyGreen from "../../assets/backgrounds/mayc/mayc-army-green.png";
+import MaycBlue from "../../assets/backgrounds/mayc/mayc-blue.png";
+import MaycGray from "../../assets/backgrounds/mayc/mayc-gray.png";
+import MaycNewPunkBlue from "../../assets/backgrounds/mayc/mayc-new-punk-blue.png";
+import MaycOrange from "../../assets/backgrounds/mayc/mayc-orange.png";
+import MaycMega from "../../assets/backgrounds/mayc/mayc-mega.png";
 
 // BAYC Logo Overlays
-import BaycLogoBlack from "../../assets/bayc/bayc-logo-overlay/bayc-logo-black.png";
-import BaycLogoWhite from "../../assets/bayc/bayc-logo-overlay/bayc-logo-white.png";
+import BaycLogoBlack from "../../assets/logo-overlays/bayc/bayc-logo-black.png";
+import BaycLogoWhite from "../../assets/logo-overlays/bayc/bayc-logo-white.png";
 
 // MAYC Logo Overlays
-import MaycLogoSlime from "../../assets/mayc/mayc-logo-overlay/mayc-logo-slime.png";
-import MaycLogoBlack from "../../assets/mayc/mayc-logo-overlay/mayc-logo-black.png";
-import MaycLogoWhite from "../../assets/mayc/mayc-logo-overlay/mayc-logo-white.png";
+import MaycLogoSlime from "../../assets/logo-overlays/mayc/mayc-logo-slime.png";
+import MaycLogoBlack from "../../assets/logo-overlays/mayc/mayc-logo-black.png";
+import MaycLogoWhite from "../../assets/logo-overlays/mayc/mayc-logo-white.png";
+
+// Shared Logo Overlays
+import ApeFestDefault from "../../assets/logo-overlays/apefest-default.png";
+import ApeFest1 from "../../assets/logo-overlays/apefest1.png";
+import ApeFest2 from "../../assets/logo-overlays/apefest2.png";
+import ApeFest3 from "../../assets/logo-overlays/apefest3.png";
+import ApeFest4 from "../../assets/logo-overlays/apefest4.png";
 
 export const getBackground = (
   type: "bayc" | "mayc",
@@ -95,27 +102,23 @@ export const getBackground = (
 };
 
 export const getLogoOverlay = (type: "bayc" | "mayc", logoOverlay: string) => {
-  switch (type) {
-    case "bayc":
-      switch (logoOverlay) {
-        case "baycLogoBlack":
-          return BaycLogoBlack;
-        case "baycLogoWhite":
-          return BaycLogoWhite;
-        default:
-          return "none";
-      }
-    case "mayc":
-      switch (logoOverlay) {
-        case "maycLogoSlime":
-          return MaycLogoSlime;
-        case "maycLogoBlack":
-          return MaycLogoBlack;
-        case "maycLogoWhite":
-          return MaycLogoWhite;
-        default:
-          return "none";
-      }
+  switch (logoOverlay) {
+    case "black":
+      return type === "bayc" ? BaycLogoBlack : MaycLogoBlack;
+    case "white":
+      return type === "bayc" ? BaycLogoWhite : MaycLogoWhite;
+    case "slime":
+      return MaycLogoSlime;
+    case "apeFestDefault":
+      return ApeFestDefault;
+    case "apeFest1":
+      return ApeFest1;
+    case "apeFest2":
+      return ApeFest2;
+    case "apeFest3":
+      return ApeFest3;
+    case "apeFest4":
+      return ApeFest4;
     default:
       return "none";
   }

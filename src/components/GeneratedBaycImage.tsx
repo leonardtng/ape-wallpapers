@@ -5,8 +5,8 @@ import { selectBaycMetadata } from "../features/baycMetadataSlice";
 import { API_CONFIG as config } from "../common/constants";
 import { ipfs } from "../common/endpoints";
 import { Bayc } from "../models";
-import BaycLockscreenPlaceholderWithOverlay from "../assets/bayc/bayc-lockscreen-placeholder-with-overlay.png";
-import BaycLockscreenPlaceholderNoOverlay from "../assets/bayc/bayc-lockscreen-placeholder-no-overlay.png";
+import BaycLockscreenPlaceholderWithOverlay from "../assets/placeholders/bayc/bayc-lockscreen-placeholder-with-overlay.png";
+import BaycLockscreenPlaceholderNoOverlay from "../assets/placeholders/bayc/bayc-lockscreen-placeholder-no-overlay.png";
 import {
   selectUserInput,
   setGeneratedBaycBackground,
@@ -18,7 +18,7 @@ import {
   getLogoOverlay,
 } from "../common/helpers";
 import ImageLoadingState from "./UI/ImageLoadingState";
-import Bayc8469 from "../assets/bayc/bayc8469.png";
+import Bayc8469 from "../assets/placeholders/bayc/bayc8469.png";
 
 const GeneratedBaycImage: React.FC = () => {
   const dispatch = useAppDispatch();
