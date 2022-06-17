@@ -31,6 +31,7 @@ const GeneratedBaycImage: React.FC = () => {
     selectedBaycId,
     generatedBaycBackground,
     selectedBaycLogoOverlay,
+    selectedBaycCustomText,
   } = useAppSelector(selectUserInput);
 
   const [withOverlay, setWithOverlay] = useState<string>(
@@ -52,24 +53,32 @@ const GeneratedBaycImage: React.FC = () => {
       return;
     }
 
-    generateImage(
-      selectedBaycId === 8469
-        ? Bayc8469
-        : `${config("ipfs").baseURL}${ipfs.baycImage(selectedBaycId)}`,
-      getBackground("bayc", baycBackground),
-      getLogoOverlay("bayc", selectedBaycLogoOverlay),
-      (generatedImage: string, withoutOverlay: string, withOverlay: string) => {
+    generateImage({
+      ipfsUrl:
+        selectedBaycId === 8469
+          ? Bayc8469
+          : `${config("ipfs").baseURL}${ipfs.baycImage(selectedBaycId)}`,
+      background: getBackground("bayc", baycBackground),
+      overlay: getLogoOverlay("bayc", selectedBaycLogoOverlay),
+      handleResults: (
+        generatedImage: string,
+        withoutOverlay: string,
+        withOverlay: string
+      ) => {
         dispatch(setGeneratedBaycBackground(generatedImage));
         setWithoutOverlay(withoutOverlay);
         setWithOverlay(withOverlay);
         dispatch(setIsGeneratingBaycImage(false));
-      }
-    );
+      },
+      customText: selectedBaycCustomText,
+      leftOffset: false,
+    });
   }, [
     dispatch,
     selectedBaycId,
     baycMetadata.value?.collection,
     selectedBaycLogoOverlay,
+    selectedBaycCustomText,
   ]);
 
   return (

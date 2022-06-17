@@ -31,6 +31,7 @@ const GeneratedMaycImage: React.FC = () => {
     selectedMaycId,
     generatedMaycBackground,
     selectedMaycLogoOverlay,
+    selectedMaycCustomText,
   } = useAppSelector(selectUserInput);
 
   const [withOverlay, setWithOverlay] = useState<string>(
@@ -55,24 +56,30 @@ const GeneratedMaycImage: React.FC = () => {
     const mouthTrait = maycDetails.value?.attributes.find(
       (trait: MaycTraits) => trait.traitType === "Mouth"
     )?.value;
-
-    generateImage(
-      selectedMaycId === 0
-        ? Mayc0
-        : `${config("ipfs").baseURL}${ipfs.maycImage(
-            maycDetails.value?.image || ""
-          )}`,
-      getBackground("mayc", maycBackground),
-      getLogoOverlay("mayc", selectedMaycLogoOverlay),
-      (generatedImage: string, withoutOverlay: string, withOverlay: string) => {
+    generateImage({
+      ipfsUrl:
+        selectedMaycId === 0
+          ? Mayc0
+          : `${config("ipfs").baseURL}${ipfs.maycImage(
+              maycDetails.value?.image || ""
+            )}`,
+      background: getBackground("mayc", maycBackground),
+      overlay: getLogoOverlay("mayc", selectedMaycLogoOverlay),
+      handleResults: (
+        generatedImage: string,
+        withoutOverlay: string,
+        withOverlay: string
+      ) => {
         dispatch(setGeneratedMaycBackground(generatedImage));
         setWithoutOverlay(withoutOverlay);
         setWithOverlay(withOverlay);
         dispatch(setIsGeneratingMaycImage(false));
       },
-      mouthTrait === "M1 Bored Cigarette" ||
-        mouthTrait === "M1 Bored Unshaven Cigarette"
-    );
+      customText: selectedMaycCustomText,
+      leftOffset:
+        mouthTrait === "M1 Bored Cigarette" ||
+        mouthTrait === "M1 Bored Unshaven Cigarette",
+    });
     // eslint-disable-next-line
   }, [dispatch, maycDetails.value?.attributes, maycDetails.value?.image]);
 

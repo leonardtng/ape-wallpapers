@@ -1,4 +1,5 @@
 import mergeImages from "merge-images";
+import html2canvas from "html2canvas";
 
 // Mockup and Overlay
 import Mockup from "../../assets/mockup.png";
@@ -124,35 +125,69 @@ export const getLogoOverlay = (type: "bayc" | "mayc", logoOverlay: string) => {
   }
 };
 
-export const generateImage = (
-  ipfsUrl: string,
-  background: string,
-  overlay: string,
+const toDataURL = (
+  url: string,
+  callback: (result: string | ArrayBuffer | null) => void
+) => {
+  var xhr = new XMLHttpRequest();
+  xhr.onload = function () {
+    var reader = new FileReader();
+    reader.onloadend = function () {
+      callback(reader.result);
+    };
+    reader.readAsDataURL(xhr.response);
+  };
+  xhr.open("GET", url);
+  xhr.responseType = "blob";
+  xhr.send();
+};
+
+export const getCustomTextColor = (overlay: string) => {
+  switch (overlay) {
+    case "black":
+      return "#000000";
+    case "white":
+      return "#ffffff";
+    case "slime":
+      return "#D0DE40";
+    case "apeFestDefault":
+    case "apeFest1":
+    case "apeFest2":
+    case "apeFest3":
+    case "apeFest4":
+      return "#FBB50F";
+    default:
+      return "#ffffff";
+  }
+};
+
+interface ImageGenerationParams {
+  ipfsUrl: string;
+  background: string;
+  overlay: string;
   handleResults: (
     generatedImage: string,
     withoutOverlay: string,
     withOverlay: string
-  ) => void,
-  leftOffset: boolean = false
-) => {
-  const toDataURL = (
-    url: string,
-    callback: (result: string | ArrayBuffer | null) => void
-  ) => {
-    var xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-      var reader = new FileReader();
-      reader.onloadend = function () {
-        callback(reader.result);
-      };
-      reader.readAsDataURL(xhr.response);
-    };
-    xhr.open("GET", url);
-    xhr.responseType = "blob";
-    xhr.send();
-  };
+  ) => void;
+  customText: string;
+  leftOffset: boolean;
+}
 
-  toDataURL(ipfsUrl, function (dataUrl: string | ArrayBuffer | null) {
+export const generateImage = (params: ImageGenerationParams) => {
+  const {
+    ipfsUrl,
+    background,
+    overlay,
+    handleResults,
+    customText,
+    leftOffset,
+  } = params;
+
+  const mergeImageChain = (
+    dataUrl: string | ArrayBuffer | null,
+    textElement?: HTMLCanvasElement
+  ) => {
     mergeImages(
       [
         {
@@ -165,12 +200,26 @@ export const generateImage = (
           x: leftOffset ? -76 : -56,
           y: 1157,
         },
+        ...(textElement
+          ? [
+              {
+                src: textElement.toDataURL(),
+                x: 0,
+                y:
+                  overlay === "none"
+                    ? 900
+                    : overlay.includes("mayc")
+                    ? 1060
+                    : 1020,
+              },
+            ]
+          : []),
         ...(overlay !== "none"
           ? [
               {
                 src: overlay,
                 x: 0,
-                y: 0,
+                y: textElement ? -40 : 0,
               },
             ]
           : []),
@@ -205,5 +254,31 @@ export const generateImage = (
         });
       });
     });
+  };
+
+  toDataURL(ipfsUrl, function (dataUrl: string | ArrayBuffer | null) {
+    if (customText.length === 0) {
+      mergeImageChain(dataUrl);
+    } else {
+      var customElement = document.createElement("div");
+      customElement.innerHTML = customText;
+
+      Object.assign(customElement.style, {
+        fontSize: overlay === "none" ? "56px" : "32px",
+        width: "575.5px",
+        textAlign: "center",
+        color: getCustomTextColor(overlay),
+      });
+      console.log(getCustomTextColor(overlay));
+      document.body.appendChild(customElement);
+
+      html2canvas(customElement, { backgroundColor: null }).then(
+        (textElement) => {
+          mergeImageChain(dataUrl, textElement);
+        }
+      );
+
+      document.body.removeChild(customElement);
+    }
   });
 };

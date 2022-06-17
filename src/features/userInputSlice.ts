@@ -39,6 +39,10 @@ interface Reducers extends SliceCaseReducers<UserInputState> {
     state: UserInputState,
     action: PayloadAction<UserInputState["selectedBaycLogoOverlay"]>
   ) => void;
+  setSelectedBaycCustomText: (
+    state: UserInputState,
+    action: PayloadAction<UserInputState["selectedBaycCustomText"]>
+  ) => void;
 
   setIsGeneratingMaycImage: (
     state: UserInputState,
@@ -56,6 +60,10 @@ interface Reducers extends SliceCaseReducers<UserInputState> {
     state: UserInputState,
     action: PayloadAction<UserInputState["selectedMaycLogoOverlay"]>
   ) => void;
+  setSelectedMaycCustomText: (
+    state: UserInputState,
+    action: PayloadAction<UserInputState["selectedMaycCustomText"]>
+  ) => void;
 }
 
 const initialState: UserInputState = {
@@ -66,10 +74,12 @@ const initialState: UserInputState = {
   selectedBaycId: 8469,
   generatedBaycBackground: BaycLockscreenPlaceholder,
   selectedBaycLogoOverlay: "white",
+  selectedBaycCustomText: "",
   isGeneratingMaycImage: false,
   selectedMaycId: 0,
   generatedMaycBackground: MaycLockscreenPlaceholder,
   selectedMaycLogoOverlay: "slime",
+  selectedMaycCustomText: "",
 };
 
 export const selectUserInput: (state: RootState) => UserInputState = (
@@ -124,6 +134,12 @@ const userInputSlice: Slice<UserInputState, Reducers, "userInput"> =
       ) => {
         state.selectedBaycLogoOverlay = action.payload;
       },
+      setSelectedBaycCustomText: (
+        state: UserInputState,
+        action: PayloadAction<UserInputState["selectedBaycCustomText"]>
+      ) => {
+        state.selectedBaycCustomText = action.payload;
+      },
 
       setIsGeneratingMaycImage: (
         state: UserInputState,
@@ -149,6 +165,12 @@ const userInputSlice: Slice<UserInputState, Reducers, "userInput"> =
       ) => {
         state.selectedMaycLogoOverlay = action.payload;
       },
+      setSelectedMaycCustomText: (
+        state: UserInputState,
+        action: PayloadAction<UserInputState["selectedMaycCustomText"]>
+      ) => {
+        state.selectedMaycCustomText = action.payload;
+      },
     },
   });
 
@@ -161,11 +183,13 @@ export const {
   setSelectedBaycId,
   setGeneratedBaycBackground,
   setSelectedBaycLogoOverlay,
+  setSelectedBaycCustomText,
 
   setIsGeneratingMaycImage,
   setSelectedMaycId,
   setGeneratedMaycBackground,
   setSelectedMaycLogoOverlay,
+  setSelectedMaycCustomText,
 } = userInputSlice.actions;
 
 export default userInputSlice.reducer;

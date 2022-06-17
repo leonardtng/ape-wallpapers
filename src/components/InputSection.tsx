@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { DownloadRounded, HelpOutlineRounded } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Checkbox,
@@ -14,18 +17,17 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
   selectUserInput,
   setIsGeneratingMaycImage,
+  setSelectedBaycCustomText,
   setSelectedBaycId,
   setSelectedBaycLogoOverlay,
+  setSelectedMaycCustomText,
   setSelectedMaycId,
   setSelectedMaycLogoOverlay,
   setShowLockscreenOverlay,
 } from "../features/userInputSlice";
-import { LoadingButton } from "@mui/lab";
-import { DownloadRounded, HelpOutlineRounded } from "@mui/icons-material";
 import { UserInputState } from "../models";
 import {
   fetchMaycDetails,
@@ -54,33 +56,52 @@ const InputSection = () => {
     selectedBaycId,
     generatedBaycBackground,
     selectedBaycLogoOverlay,
+    selectedBaycCustomText,
     isGeneratingMaycImage,
     selectedMaycId,
     generatedMaycBackground,
     selectedMaycLogoOverlay,
+    selectedMaycCustomText,
   } = useAppSelector(selectUserInput);
 
   const [inputBaycId, setInputBaycId] = useState<number>(selectedBaycId);
   const [inputBaycLogoOverlay, setBaycLogoOverlay] = useState<
     UserInputState["selectedBaycLogoOverlay"]
   >(selectedBaycLogoOverlay);
+  const [inputBaycCustomText, setInputBaycCustomText] = useState<
+    UserInputState["selectedBaycCustomText"]
+  >(selectedBaycCustomText);
 
   const [inputMaycId, setInputMaycId] = useState<number>(selectedMaycId);
   const [inputMaycLogoOverlay, setMaycLogoOverlay] = useState<
     UserInputState["selectedMaycLogoOverlay"]
   >(selectedMaycLogoOverlay);
+  const [inputMaycCustomText, setInputMaycCustomText] = useState<
+    UserInputState["selectedMaycCustomText"]
+  >(selectedMaycCustomText);
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     if (nftMode === "bayc") {
       dispatch(setSelectedBaycId(inputBaycId));
       dispatch(setSelectedBaycLogoOverlay(inputBaycLogoOverlay));
+      dispatch(setSelectedBaycCustomText(inputBaycCustomText));
     } else {
       dispatch(setIsGeneratingMaycImage(true));
       dispatch(fetchMaycDetails(inputMaycId));
       dispatch(setSelectedMaycId(inputMaycId));
       dispatch(setSelectedMaycLogoOverlay(inputMaycLogoOverlay));
+      dispatch(setSelectedMaycCustomText(inputMaycCustomText));
     }
-  };
+  }, [
+    dispatch,
+    inputBaycId,
+    inputBaycLogoOverlay,
+    inputBaycCustomText,
+    inputMaycId,
+    inputMaycLogoOverlay,
+    nftMode,
+    inputMaycCustomText,
+  ]);
 
   useEffect(() => {
     if (maycDetails.status === "FAILED") {
@@ -98,6 +119,18 @@ const InputSection = () => {
     a.click();
     a.remove();
   };
+
+  useEffect(() => {
+    const listener = (event: any) => {
+      if (event.code === "Enter" || event.code === "NumpadEnter") {
+        handleSubmit();
+      }
+    };
+    document.addEventListener("keydown", listener);
+    return () => {
+      document.removeEventListener("keydown", listener);
+    };
+  }, [handleSubmit]);
 
   const sharedOverlays = [
     {
@@ -159,20 +192,13 @@ const InputSection = () => {
   ];
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      component="form"
-      onSubmit={handleSubmit}
-    >
+    <Box display="flex" flexDirection="column" alignItems="center">
       <Box width="100%">
         <Typography variant="body2" sx={{ ml: 1, mb: 1 }}>
           {nftMode === "bayc" ? "BAYC ID" : "MAYC ID"}
         </Typography>
         <TextField
           fullWidth
-          focused
           defaultValue={nftMode === "bayc" ? selectedBaycId : selectedMaycId}
           onFocus={(event) => {
             event.target.select();
@@ -182,6 +208,15 @@ const InputSection = () => {
           sx={{
             boxShadow: `0 0 5px ${theme.palette.primary.main}`,
             mb: 2,
+            "& fieldset": {
+              border: `2px solid ${theme.palette.primary.main} !important`,
+            },
+            ":hover": {
+              boxShadow: `0 0 10px ${theme.palette.primary.main}`,
+            },
+            "& .Mui-focused": {
+              boxShadow: `0 0 15px ${theme.palette.primary.main}`,
+            },
           }}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             nftMode === "bayc"
@@ -214,11 +249,17 @@ const InputSection = () => {
         <Select
           fullWidth
           sx={{
-            mb: 4,
+            mb: 2,
             border: `2px solid ${theme.palette.primary.main}`,
             boxShadow: `0 0 5px ${theme.palette.primary.main}`,
             fieldset: {
               border: "none",
+            },
+            ":hover": {
+              boxShadow: `0 0 10px ${theme.palette.primary.main}`,
+            },
+            "& .Mui-focused": {
+              boxShadow: `0 0 15px ${theme.palette.primary.main}`,
             },
           }}
           value={
@@ -250,13 +291,44 @@ const InputSection = () => {
         </Select>
       </Box>
 
+      <Box width="100%" mb={2}>
+        <Typography variant="body2" sx={{ ml: 1, mb: 1 }}>
+          Custom Text
+        </Typography>
+        <TextField
+          fullWidth
+          placeholder="Twitter Handles / Discord IDs / etc."
+          onFocus={(event) => {
+            event.target.select();
+          }}
+          color="primary"
+          sx={{
+            boxShadow: `0 0 5px ${theme.palette.primary.main}`,
+            mb: 2,
+            "& fieldset": {
+              border: `2px solid ${theme.palette.primary.main} !important`,
+            },
+            ":hover": {
+              boxShadow: `0 0 10px ${theme.palette.primary.main}`,
+            },
+            "& .Mui-focused": {
+              boxShadow: `0 0 15px ${theme.palette.primary.main}`,
+            },
+          }}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            nftMode === "bayc"
+              ? setInputBaycCustomText(event.target.value)
+              : setInputMaycCustomText(event.target.value);
+          }}
+        />
+      </Box>
+
       <LoadingButton
         loading={
           (nftMode === "bayc" && isGeneratingBaycImage) ||
           (nftMode === "mayc" && isGeneratingMaycImage)
         }
         variant="contained"
-        type="submit"
         sx={{
           width: "100%",
           mb: 3,

@@ -15,6 +15,7 @@ export interface UserInputState {
     | "apeFest2"
     | "apeFest3"
     | "apeFest4";
+  selectedBaycCustomText: string;
 
   isGeneratingMaycImage: boolean;
   selectedMaycId: number;
@@ -29,4 +30,5 @@ export interface UserInputState {
     | "apeFest2"
     | "apeFest3"
     | "apeFest4";
+  selectedMaycCustomText: string;
 }
