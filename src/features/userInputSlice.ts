@@ -74,12 +74,18 @@ const initialState: UserInputState = {
   selectedBaycId: 8469,
   generatedBaycBackground: BaycLockscreenPlaceholder,
   selectedBaycLogoOverlay: "white",
-  selectedBaycCustomText: "",
+  selectedBaycCustomText: {
+    content: "",
+    color: "#ffffff",
+  },
   isGeneratingMaycImage: false,
   selectedMaycId: 0,
   generatedMaycBackground: MaycLockscreenPlaceholder,
   selectedMaycLogoOverlay: "slime",
-  selectedMaycCustomText: "",
+  selectedMaycCustomText: {
+    content: "",
+    color: "#D0DE40",
+  },
 };
 
 export const selectUserInput: (state: RootState) => UserInputState = (

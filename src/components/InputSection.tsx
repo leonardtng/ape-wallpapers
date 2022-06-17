@@ -33,6 +33,7 @@ import {
   fetchMaycDetails,
   selectMaycDetails,
 } from "../features/maycDetailsSlice";
+import TextColorPicker from "./UI/TextColorPicker";
 
 const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -297,7 +298,12 @@ const InputSection = () => {
         </Typography>
         <TextField
           fullWidth
-          placeholder="Twitter Handles / Discord IDs / etc."
+          placeholder="Twitter Handle / Discord ID / etc."
+          defaultValue={
+            nftMode === "bayc"
+              ? selectedBaycCustomText.content
+              : selectedMaycCustomText.content
+          }
           onFocus={(event) => {
             event.target.select();
           }}
@@ -317,8 +323,28 @@ const InputSection = () => {
           }}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             nftMode === "bayc"
-              ? setInputBaycCustomText(event.target.value)
-              : setInputMaycCustomText(event.target.value);
+              ? setInputBaycCustomText((prev) => ({
+                  ...prev,
+                  content: event.target.value,
+                }))
+              : setInputMaycCustomText((prev) => ({
+                  ...prev,
+                  content: event.target.value,
+                }));
+          }}
+          InputProps={{
+            endAdornment:
+              nftMode === "bayc" ? (
+                <TextColorPicker
+                  inputCustomText={inputBaycCustomText}
+                  setInputCustomText={setInputBaycCustomText}
+                />
+              ) : (
+                <TextColorPicker
+                  inputCustomText={inputMaycCustomText}
+                  setInputCustomText={setInputMaycCustomText}
+                />
+              ),
           }}
         />
       </Box>

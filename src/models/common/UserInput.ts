@@ -1,3 +1,8 @@
+export interface TextObject {
+  content: string;
+  color: string;
+}
+
 export interface UserInputState {
   nftMode: "bayc" | "mayc";
   imageDisplayMode: "preview" | "jpeg";
@@ -15,7 +20,7 @@ export interface UserInputState {
     | "apeFest2"
     | "apeFest3"
     | "apeFest4";
-  selectedBaycCustomText: string;
+  selectedBaycCustomText: TextObject;
 
   isGeneratingMaycImage: boolean;
   selectedMaycId: number;
@@ -30,5 +35,5 @@ export interface UserInputState {
     | "apeFest2"
     | "apeFest3"
     | "apeFest4";
-  selectedMaycCustomText: string;
+  selectedMaycCustomText: TextObject;
 }

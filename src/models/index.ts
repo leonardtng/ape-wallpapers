@@ -13,7 +13,10 @@ import {
   MaycDetails as MaycDetailsInterface,
   MaycDetailsState as MaycDetailsStateInterface,
 } from "./api/MaycDetails";
-import { UserInputState as UserInputStateInterface } from "./common/UserInput";
+import {
+  TextObject as TextObjectInterface,
+  UserInputState as UserInputStateInterface,
+} from "./common/UserInput";
 
 export type Status = StatusInterface;
 export type GenericState<T> = GenericStateInterface<T>;
@@ -24,4 +27,5 @@ export type BaycMetadataState = BaycMetadataStateInterface;
 export type MaycTraits = MaycTraitsInterface;
 export type MaycDetails = MaycDetailsInterface;
 export type MaycDetailsState = MaycDetailsStateInterface;
+export type TextObject = TextObjectInterface;
 export type UserInputState = UserInputStateInterface;

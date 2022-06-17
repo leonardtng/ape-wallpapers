@@ -1,5 +1,6 @@
 import mergeImages from "merge-images";
 import html2canvas from "html2canvas";
+import { TextObject } from "../../models";
 
 // Mockup and Overlay
 import Mockup from "../../assets/mockup.png";
@@ -170,7 +171,7 @@ interface ImageGenerationParams {
     withoutOverlay: string,
     withOverlay: string
   ) => void;
-  customText: string;
+  customText: TextObject;
   leftOffset: boolean;
 }
 
@@ -257,19 +258,19 @@ export const generateImage = (params: ImageGenerationParams) => {
   };
 
   toDataURL(ipfsUrl, function (dataUrl: string | ArrayBuffer | null) {
-    if (customText.length === 0) {
+    if (customText.content.length === 0) {
       mergeImageChain(dataUrl);
     } else {
       var customElement = document.createElement("div");
-      customElement.innerHTML = customText;
+      customElement.innerHTML = customText.content;
 
       Object.assign(customElement.style, {
         fontSize: overlay === "none" ? "56px" : "32px",
         width: "575.5px",
         textAlign: "center",
-        color: getCustomTextColor(overlay),
+        color: customText.color,
       });
-      console.log(getCustomTextColor(overlay));
+
       document.body.appendChild(customElement);
 
       html2canvas(customElement, { backgroundColor: null }).then(
