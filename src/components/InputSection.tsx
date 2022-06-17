@@ -294,7 +294,7 @@ const InputSection = () => {
 
       <Box width="100%" mb={2}>
         <Typography variant="body2" sx={{ ml: 1, mb: 1 }}>
-          Custom Text
+          Caption
         </Typography>
         <TextField
           fullWidth
