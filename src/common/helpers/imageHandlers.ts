@@ -264,7 +264,9 @@ export const generateImage = (params: ImageGenerationParams) => {
       var customElement = document.createElement("div");
       customElement.innerHTML = customText.content;
 
-      const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+      const isMobile =
+        "ontouchstart" in document.documentElement &&
+        navigator.userAgent.match(/Mobi|Android/);
 
       const getFontSize = () => {
         switch (overlay) {
