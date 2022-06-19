@@ -210,7 +210,7 @@ export const generateImage = (params: ImageGenerationParams) => {
                   overlay === "none"
                     ? 900
                     : overlay.includes("mayc")
-                    ? 1060
+                    ? 1050
                     : 1020,
               },
             ]
@@ -264,9 +264,20 @@ export const generateImage = (params: ImageGenerationParams) => {
       var customElement = document.createElement("div");
       customElement.innerHTML = customText.content;
 
+      const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+
+      const getFontSize = () => {
+        switch (overlay) {
+          case "none":
+            return isMobile ? "36px" : "56px";
+          default:
+            return isMobile ? "22px" : "32px";
+        }
+      };
+
       Object.assign(customElement.style, {
-        fontSize: overlay === "none" ? "56px" : "32px",
-        width: "575.5px",
+        fontSize: getFontSize(),
+        width: isMobile ? "385px" : "575.5px",
         textAlign: "center",
         color: customText.color,
       });
