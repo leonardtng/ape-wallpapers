@@ -187,7 +187,7 @@ export const generateImage = (params: ImageGenerationParams) => {
 
   const mergeImageChain = (
     dataUrl: string | ArrayBuffer | null,
-    textElement?: HTMLCanvasElement
+    textCanvas?: HTMLCanvasElement
   ) => {
     mergeImages(
       [
@@ -201,10 +201,10 @@ export const generateImage = (params: ImageGenerationParams) => {
           x: leftOffset ? -76 : -56,
           y: 1157,
         },
-        ...(textElement
+        ...(textCanvas
           ? [
               {
-                src: textElement.toDataURL(),
+                src: textCanvas.toDataURL(),
                 x: 0,
                 y:
                   overlay === "none"
@@ -220,7 +220,7 @@ export const generateImage = (params: ImageGenerationParams) => {
               {
                 src: overlay,
                 x: 0,
-                y: textElement ? -40 : 0,
+                y: textCanvas ? -40 : 0,
               },
             ]
           : []),
@@ -264,31 +264,18 @@ export const generateImage = (params: ImageGenerationParams) => {
       var customElement = document.createElement("div");
       customElement.innerHTML = customText.content;
 
-      const isMobile =
-        "ontouchstart" in document.documentElement &&
-        navigator.userAgent.match(/Mobi|Android/);
-
-      const getFontSize = () => {
-        switch (overlay) {
-          case "none":
-            return isMobile ? "36px" : "56px";
-          default:
-            return isMobile ? "22px" : "32px";
-        }
-      };
-
       Object.assign(customElement.style, {
-        fontSize: getFontSize(),
-        width: isMobile ? "385px" : "575.5px",
+        fontSize: overlay === "none" ? "112px" : "64px",
+        width: "1151px",
         textAlign: "center",
         color: customText.color,
       });
 
       document.body.appendChild(customElement);
 
-      html2canvas(customElement, { backgroundColor: null }).then(
-        (textElement) => {
-          mergeImageChain(dataUrl, textElement);
+      html2canvas(customElement, { backgroundColor: null, scale: 1 }).then(
+        (textCanvas) => {
+          mergeImageChain(dataUrl, textCanvas);
         }
       );
 
