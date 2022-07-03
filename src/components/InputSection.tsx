@@ -267,17 +267,6 @@ const InputSection = () => {
             nftMode === "bayc" ? inputBaycLogoOverlay : inputMaycLogoOverlay
           }
           onChange={(event: SelectChangeEvent) => {
-            if (event.target.value === "none") {
-              nftMode === "bayc"
-                ? setInputBaycCustomText((prev) => ({
-                    ...prev,
-                    content: "",
-                  }))
-                : setInputMaycCustomText((prev) => ({
-                    ...prev,
-                    content: "",
-                  }));
-            }
             nftMode === "bayc"
               ? setBaycLogoOverlay(
                   event.target

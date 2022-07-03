@@ -258,17 +258,11 @@ export const generateImage = (params: ImageGenerationParams) => {
   };
 
   toDataURL(ipfsUrl, function (dataUrl: string | ArrayBuffer | null) {
-    if (customText.content.length === 0) {
+    if (customText.content.length === 0 || overlay === "none") {
       mergeImageChain(dataUrl);
     } else {
       var customElement = document.createElement("div");
-
-      if (overlay === "none") {
-        customElement.innerHTML =
-          "I don't own this ape and I'm an idiot. I tried to game the system but was outsmarted by @Brainy8469";
-      } else {
-        customElement.innerHTML = customText.content;
-      }
+      customElement.innerHTML = customText.content;
 
       Object.assign(customElement.style, {
         fontSize: "64px",
