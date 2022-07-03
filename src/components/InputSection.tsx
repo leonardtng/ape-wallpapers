@@ -35,7 +35,7 @@ import {
 } from "../features/maycDetailsSlice";
 import TextColorPicker from "./UI/TextColorPicker";
 
-const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
+const CleanTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))({
   [`& .${tooltipClasses.tooltip}`]: {
@@ -231,7 +231,7 @@ const InputSection = () => {
           <Typography variant="body2" sx={{ ml: 1, mr: "4px" }}>
             Logo Overlay
           </Typography>
-          <CustomWidthTooltip
+          <CleanTooltip
             sx={{ maxWidth: 164 }}
             title="Contact me on Twitter to add your community's logo here!"
             placement="top"
@@ -244,7 +244,7 @@ const InputSection = () => {
                 cursor: "pointer",
               }}
             />
-          </CustomWidthTooltip>
+          </CleanTooltip>
         </Box>
 
         <Select
@@ -267,6 +267,17 @@ const InputSection = () => {
             nftMode === "bayc" ? inputBaycLogoOverlay : inputMaycLogoOverlay
           }
           onChange={(event: SelectChangeEvent) => {
+            if (event.target.value === "none") {
+              nftMode === "bayc"
+                ? setInputBaycCustomText((prev) => ({
+                    ...prev,
+                    content: "",
+                  }))
+                : setInputMaycCustomText((prev) => ({
+                    ...prev,
+                    content: "",
+                  }));
+            }
             nftMode === "bayc"
               ? setBaycLogoOverlay(
                   event.target
@@ -296,11 +307,11 @@ const InputSection = () => {
         <Typography variant="body2" sx={{ ml: 1, mb: 1 }}>
           Custom Caption
         </Typography>
-        <CustomWidthTooltip
+        <CleanTooltip
           placement="top"
           title={
             inputBaycLogoOverlay === "none" || inputMaycLogoOverlay === "none"
-              ? "Please select a logo to use custom text, or contact me on twitter to have it done for you manually"
+              ? "Please select a logo overlay to enter custom text, or contact me on twitter to have it done for you manually"
               : ""
           }
         >
@@ -358,7 +369,7 @@ const InputSection = () => {
                 ),
             }}
           />
-        </CustomWidthTooltip>
+        </CleanTooltip>
       </Box>
 
       <LoadingButton
