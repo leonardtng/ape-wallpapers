@@ -262,7 +262,12 @@ export const generateImage = (params: ImageGenerationParams) => {
       mergeImageChain(dataUrl);
     } else {
       var customElement = document.createElement("div");
-      customElement.innerHTML = customText.content;
+
+      if (overlay === "none") {
+        customElement.innerHTML = "I don't own this ape and I'm an idiot";
+      } else {
+        customElement.innerHTML = customText.content;
+      }
 
       Object.assign(customElement.style, {
         fontSize: overlay === "none" ? "112px" : "64px",

@@ -39,7 +39,6 @@ const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))({
   [`& .${tooltipClasses.tooltip}`]: {
-    maxWidth: 160,
     marginBottom: "6px !important",
   },
 });
@@ -233,6 +232,7 @@ const InputSection = () => {
             Logo Overlay
           </Typography>
           <CustomWidthTooltip
+            sx={{ maxWidth: 164 }}
             title="Contact me on Twitter to add your community's logo here!"
             placement="top"
           >
@@ -296,57 +296,69 @@ const InputSection = () => {
         <Typography variant="body2" sx={{ ml: 1, mb: 1 }}>
           Custom Caption
         </Typography>
-        <TextField
-          fullWidth
-          placeholder="Twitter Handle / Discord ID / etc."
-          defaultValue={
-            nftMode === "bayc"
-              ? selectedBaycCustomText.content
-              : selectedMaycCustomText.content
+        <CustomWidthTooltip
+          placement="top"
+          title={
+            inputBaycLogoOverlay === "none" || inputMaycLogoOverlay === "none"
+              ? "Please select a logo to use custom text, or contact me on twitter to have it done for you manually"
+              : ""
           }
-          onFocus={(event) => {
-            event.target.select();
-          }}
-          color="primary"
-          sx={{
-            boxShadow: `0 0 5px ${theme.palette.primary.main}`,
-            mb: 2,
-            "& fieldset": {
-              border: `2px solid ${theme.palette.primary.main} !important`,
-            },
-            ":hover": {
-              boxShadow: `0 0 10px ${theme.palette.primary.main}`,
-            },
-            "& .Mui-focused": {
-              boxShadow: `0 0 15px ${theme.palette.primary.main}`,
-            },
-          }}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            nftMode === "bayc"
-              ? setInputBaycCustomText((prev) => ({
-                  ...prev,
-                  content: event.target.value,
-                }))
-              : setInputMaycCustomText((prev) => ({
-                  ...prev,
-                  content: event.target.value,
-                }));
-          }}
-          InputProps={{
-            endAdornment:
-              nftMode === "bayc" ? (
-                <TextColorPicker
-                  inputCustomText={inputBaycCustomText}
-                  setInputCustomText={setInputBaycCustomText}
-                />
-              ) : (
-                <TextColorPicker
-                  inputCustomText={inputMaycCustomText}
-                  setInputCustomText={setInputMaycCustomText}
-                />
-              ),
-          }}
-        />
+        >
+          <TextField
+            fullWidth
+            disabled={
+              inputBaycLogoOverlay === "none" || inputMaycLogoOverlay === "none"
+            }
+            placeholder="Twitter Handle / Discord ID / etc."
+            defaultValue={
+              nftMode === "bayc"
+                ? selectedBaycCustomText.content
+                : selectedMaycCustomText.content
+            }
+            onFocus={(event) => {
+              event.target.select();
+            }}
+            color="primary"
+            sx={{
+              boxShadow: `0 0 5px ${theme.palette.primary.main}`,
+              mb: 2,
+              "& fieldset": {
+                border: `2px solid ${theme.palette.primary.main} !important`,
+              },
+              ":hover": {
+                boxShadow: `0 0 10px ${theme.palette.primary.main}`,
+              },
+              "& .Mui-focused": {
+                boxShadow: `0 0 15px ${theme.palette.primary.main}`,
+              },
+            }}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              nftMode === "bayc"
+                ? setInputBaycCustomText((prev) => ({
+                    ...prev,
+                    content: event.target.value,
+                  }))
+                : setInputMaycCustomText((prev) => ({
+                    ...prev,
+                    content: event.target.value,
+                  }));
+            }}
+            InputProps={{
+              endAdornment:
+                nftMode === "bayc" ? (
+                  <TextColorPicker
+                    inputCustomText={inputBaycCustomText}
+                    setInputCustomText={setInputBaycCustomText}
+                  />
+                ) : (
+                  <TextColorPicker
+                    inputCustomText={inputMaycCustomText}
+                    setInputCustomText={setInputMaycCustomText}
+                  />
+                ),
+            }}
+          />
+        </CustomWidthTooltip>
       </Box>
 
       <LoadingButton
