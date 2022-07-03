@@ -264,13 +264,15 @@ export const generateImage = (params: ImageGenerationParams) => {
       var customElement = document.createElement("div");
 
       if (overlay === "none") {
-        customElement.innerHTML = "I don't own this ape and I'm an idiot";
+        customElement.innerHTML =
+          "I don't own this ape and I'm an idiot. I tried to game the system but was outsmarted by @Brainy8469";
       } else {
         customElement.innerHTML = customText.content;
       }
 
       Object.assign(customElement.style, {
-        fontSize: overlay === "none" ? "112px" : "64px",
+        fontSize: "64px",
+        // fontSize: overlay === "none" ? "112px" : "64px",
         width: "1151px",
         textAlign: "center",
         color: customText.color,
