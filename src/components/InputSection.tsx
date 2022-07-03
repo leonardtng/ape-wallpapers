@@ -300,7 +300,7 @@ const InputSection = () => {
           placement="top"
           title={
             inputBaycLogoOverlay === "none" || inputMaycLogoOverlay === "none"
-              ? "Please select a logo overlay to enter custom text, or contact me on twitter to have it done for you manually"
+              ? "Please select a logo overlay to enable custom text, or contact me on twitter to have it done for you manually"
               : ""
           }
         >
