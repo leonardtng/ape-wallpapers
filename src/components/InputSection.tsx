@@ -308,7 +308,8 @@ const InputSection = () => {
           <TextField
             fullWidth
             disabled={
-              inputBaycLogoOverlay === "none" || inputMaycLogoOverlay === "none"
+              (nftMode === "bayc" && inputBaycLogoOverlay === "none") ||
+              (nftMode === "mayc" && inputMaycLogoOverlay === "none")
             }
             placeholder="Twitter Handle / Discord ID / etc."
             defaultValue={
