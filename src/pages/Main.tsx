@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Card, Hidden, useTheme } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { fetchBaycMetadata } from "../features/baycMetadataSlice";
@@ -20,6 +20,8 @@ const Main: React.FC = () => {
   useEffect(() => {
     dispatch(fetchBaycMetadata());
   }, [dispatch]);
+
+  const [errorSnackbarOpen, setErrorSnackbarOpen] = useState<boolean>(false);
 
   return (
     <Box
@@ -100,7 +102,9 @@ const Main: React.FC = () => {
         </Box>
       </Box>
       <Footer />
-      <ErrorSnackbar />
+      <ErrorSnackbar open={errorSnackbarOpen} setOpen={setErrorSnackbarOpen}>
+        Unable to fetch metadata, please try again later
+      </ErrorSnackbar>
     </Box>
   );
 };

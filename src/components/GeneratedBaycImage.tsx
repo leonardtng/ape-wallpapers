@@ -19,6 +19,7 @@ import {
 } from "../common/helpers";
 import ImageLoadingState from "./UI/ImageLoadingState";
 import Bayc8469 from "../assets/placeholders/bayc/bayc8469.png";
+import ErrorSnackbar from "./UI/ErrorSnackbar";
 
 const GeneratedBaycImage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -40,6 +41,8 @@ const GeneratedBaycImage: React.FC = () => {
   const [withoutOverlay, setWithoutOverlay] = useState<string>(
     BaycLockscreenPlaceholderNoOverlay
   );
+
+  const [errorSnackbarOpen, setErrorSnackbarOpen] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(setIsGeneratingBaycImage(true));
@@ -72,6 +75,11 @@ const GeneratedBaycImage: React.FC = () => {
       },
       customText: selectedBaycCustomText,
       leftOffset: false,
+      handleImageError: (error: Error) => {
+        console.error(error);
+        setErrorSnackbarOpen(true);
+        dispatch(setIsGeneratingBaycImage(false));
+      },
     });
   }, [
     dispatch,
@@ -104,6 +112,9 @@ const GeneratedBaycImage: React.FC = () => {
           />
         </Box>
       )}
+      <ErrorSnackbar open={errorSnackbarOpen} setOpen={setErrorSnackbarOpen}>
+        Unable to fetch image from IPFS, please try again later
+      </ErrorSnackbar>
     </>
   );
 };

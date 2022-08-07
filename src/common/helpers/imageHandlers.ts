@@ -173,6 +173,7 @@ interface ImageGenerationParams {
   ) => void;
   customText: TextObject;
   leftOffset: boolean;
+  handleImageError: (error: Error) => void;
 }
 
 export const generateImage = (params: ImageGenerationParams) => {
@@ -183,6 +184,7 @@ export const generateImage = (params: ImageGenerationParams) => {
     handleResults,
     customText,
     leftOffset,
+    handleImageError,
   } = params;
 
   const mergeImageChain = (
@@ -226,35 +228,37 @@ export const generateImage = (params: ImageGenerationParams) => {
           : []),
       ],
       { width: 1151, height: 2419 }
-    ).then((generatedImage) => {
-      mergeImages([
-        {
-          src: generatedImage,
-          x: 155,
-          y: 166,
-        },
-        {
-          src: Mockup,
-          x: 0,
-          y: 0,
-        },
-      ]).then((withoutOverlay) => {
+    )
+      .then((generatedImage) => {
         mergeImages([
           {
-            src: withoutOverlay,
-            x: 0,
-            y: 0,
+            src: generatedImage,
+            x: 155,
+            y: 166,
           },
           {
-            src: Overlay,
+            src: Mockup,
             x: 0,
             y: 0,
           },
-        ]).then((withOverlay) => {
-          handleResults(generatedImage, withoutOverlay, withOverlay);
+        ]).then((withoutOverlay) => {
+          mergeImages([
+            {
+              src: withoutOverlay,
+              x: 0,
+              y: 0,
+            },
+            {
+              src: Overlay,
+              x: 0,
+              y: 0,
+            },
+          ]).then((withOverlay) => {
+            handleResults(generatedImage, withoutOverlay, withOverlay);
+          });
         });
-      });
-    });
+      })
+      .catch(handleImageError);
   };
 
   toDataURL(ipfsUrl, function (dataUrl: string | ArrayBuffer | null) {

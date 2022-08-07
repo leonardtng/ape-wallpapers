@@ -19,6 +19,7 @@ import {
 } from "../common/helpers";
 import ImageLoadingState from "./UI/ImageLoadingState";
 import Mayc0 from "../assets/placeholders/mayc/mayc0.png";
+import ErrorSnackbar from "./UI/ErrorSnackbar";
 
 const GeneratedMaycImage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -40,6 +41,8 @@ const GeneratedMaycImage: React.FC = () => {
   const [withoutOverlay, setWithoutOverlay] = useState<string>(
     MaycLockscreenPlaceholderNoOverlay
   );
+
+  const [errorSnackbarOpen, setErrorSnackbarOpen] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(setIsGeneratingMaycImage(true));
@@ -79,6 +82,11 @@ const GeneratedMaycImage: React.FC = () => {
       leftOffset:
         mouthTrait === "M1 Bored Cigarette" ||
         mouthTrait === "M1 Bored Unshaven Cigarette",
+      handleImageError: (error: Error) => {
+        console.error(error);
+        setErrorSnackbarOpen(true);
+        dispatch(setIsGeneratingMaycImage(false));
+      },
     });
     // eslint-disable-next-line
   }, [dispatch, maycDetails.value?.attributes, maycDetails.value?.image]);
@@ -106,6 +114,9 @@ const GeneratedMaycImage: React.FC = () => {
           />
         </Box>
       )}
+      <ErrorSnackbar open={errorSnackbarOpen} setOpen={setErrorSnackbarOpen}>
+        Unable to fetch image from IPFS, please try again later
+      </ErrorSnackbar>
     </>
   );
 };

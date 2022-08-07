@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Alert, Slide, SlideProps, Snackbar } from "@mui/material";
 import { useAppSelector } from "../../app/hooks";
 import { selectBaycMetadata } from "../../features/baycMetadataSlice";
@@ -8,11 +8,15 @@ const SlideTransition = (props: SlideProps) => {
   return <Slide {...props} direction="up" />;
 };
 
-const ErrorSnackbar = () => {
+interface Props {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  children: React.ReactNode;
+}
+
+const ErrorSnackbar: React.FC<Props> = ({ open, setOpen, children }: Props) => {
   const baycMetadata = useAppSelector(selectBaycMetadata);
   const maycDetails = useAppSelector(selectMaycDetails);
-
-  const [open, setOpen] = useState<boolean>(false);
 
   const handleClose = (
     event?: React.SyntheticEvent | Event,
@@ -29,13 +33,13 @@ const ErrorSnackbar = () => {
     if (baycMetadata.status === "FAILED") {
       setOpen(true);
     }
-  }, [baycMetadata.status]);
+  }, [baycMetadata.status, setOpen]);
 
   useEffect(() => {
     if (maycDetails.status === "FAILED") {
       setOpen(true);
     }
-  }, [maycDetails.status]);
+  }, [maycDetails.status, setOpen]);
 
   return (
     <Snackbar
@@ -44,9 +48,7 @@ const ErrorSnackbar = () => {
       onClose={handleClose}
       TransitionComponent={SlideTransition}
     >
-      <Alert severity="error">
-        Unable to fetch metadata, please try again later
-      </Alert>
+      <Alert severity="error">{children}</Alert>
     </Snackbar>
   );
 };
