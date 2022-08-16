@@ -1,46 +1,34 @@
-# Getting Started with Create React App
+[![demo](src/assets/card.png)][1]
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## ⭐  About
+Over many months of being actively involved in the [Web3 and NFT space][2], as well as being a member of the [Bored Ape Yacht Club (BAYC)][3] community, Ape Wallpapers was created out of a desire to contribute and build something of value for this community. 
 
-## Available Scripts
+In the Ape Wallpapers web app, the process of creating mobile wallpapers of BAYC NFTs is extremely streamlined, allowing ape holders and community members to seamlessly express their Web3 identity on their lock screens.
 
-In the project directory, you can run:
+This is the first project where I was required to dabble into image manipulation. I first had to fetch the image of the ape from IPFS (only available in square dimensions), and then combined it with the logos and custom text of the user's choice to construct the wallpaper.
 
-### `npm start`
+Visit the website at [apewallpapers.com][1] to check it out!
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 🚀  Reception
+At launch, the site was very positively received by the community; reaching a peak user count of over 3000 users, as well as spawning an array of copies and similar websites from other NFT communities. Take a look at all the happy users flexing their wallpapers generated from the site on the dedicated Twitter thread [here][4]!
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 🛠️  Key Technologies
+This frontend UI of the project was deployed on AWS and built using:
 
-### `npm test`
+- React
+- Redux
+- TypeScript
+- Material-UI
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The backend server of the project was deployed on Heroku and built using:
 
-### `npm run build`
+- Express
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 😊  Contact Me
+If you liked the website or just want to get in touch, email me at <a href="mailto:theleonardtng@gmail.com">theleonardtng@gmail.com</a> or drop me a message at the various social media platforms listed at the bottom of [my website][5]. Cheers.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+[1]: https://apewallpapers.com
+[2]: https://ethereum.org/en/web3/
+[3]: https://boredapeyachtclub.com/
+[4]: https://twitter.com/Brainy8469/status/1533502239515414528
+[5]: https://leonardtng.com
