@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from "axios";
 
-const localUrl = "http://154.26.133.18:8000/";
-const prodUrl = "http://154.26.133.18:8000/";
+const localUrl = "https://api.apewallpapers.com/";
+const prodUrl = "https://api.apewallpapers.com/";
 
 export const API_CONFIG: (server: "ipfs" | "bayc") => AxiosRequestConfig = (
   server: "ipfs" | "bayc"
