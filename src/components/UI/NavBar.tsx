@@ -36,11 +36,11 @@ const NavBar: React.FC = () => {
             Created by{" "}
             <Link
               color="secondary"
-              href="https://twitter.com/Brainy8469"
+              href="https://twitter.com/LeonardMainnet"
               target="_blank"
               rel="noopener noreferrer"
             >
-              @Brainy8469
+              @LeonardMainnet
             </Link>
           </Typography>
         </Box>

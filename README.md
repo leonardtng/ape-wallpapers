@@ -30,5 +30,5 @@ If you liked the website or just want to get in touch, email me at <a href="mail
 [1]: https://apewallpapers.com
 [2]: https://ethereum.org/en/web3/
 [3]: https://boredapeyachtclub.com/
-[4]: https://twitter.com/Brainy8469/status/1533502239515414528
+[4]: https://twitter.com/leonardmainnet/status/1533502239515414528
 [5]: https://leonardtng.com
