@@ -22,3 +22,13 @@ export interface BaycMetadata {
 }
 
 export interface BaycMetadataState extends GenericState<BaycMetadata | null> {}
+
+export interface BaycAttribute {
+  traitType: string;
+  value: string;
+}
+
+export interface BaycIpfsMetadata {
+  image: string;
+  attributes: BaycAttribute[];
+}

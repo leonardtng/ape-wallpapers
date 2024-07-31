@@ -9,7 +9,7 @@ export const API_CONFIG: (server: "ipfs" | "bayc") => AxiosRequestConfig = (
   switch (server) {
     case "ipfs":
       return {
-        baseURL: "https://ipfs.io/ipfs/",
+        baseURL: "https://gateway.moralisipfs.com/ipfs/",
         responseType: "json",
         method: "GET",
       };
