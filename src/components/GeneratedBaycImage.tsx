@@ -98,7 +98,12 @@ const GeneratedBaycImage: React.FC = () => {
 
     img.src = url;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, selectedBaycId, selectedBaycCustomText]);
+  }, [
+    dispatch,
+    selectedBaycId,
+    selectedBaycCustomText,
+    selectedBaycLogoOverlay,
+  ]);
 
   useEffect(() => {
     handleBaycMetadata();
